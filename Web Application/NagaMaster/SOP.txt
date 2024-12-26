@@ -1,0 +1,315 @@
+﻿DELIMITER $$
+CREATE DEFINER=`root`@`%` PROCEDURE `GetStockAudit`(PPlant VARCHAR(50))
+BEGIN
+	DECLARE PInnerqry TEXT;
+    DROP TEMPORARY TABLE IF EXISTS temp_audit_table;   
+    Delete from temp_audit_web;
+    IF (PPlant = '9300') THEN
+    	SET @PInnerqry = Concat('CREATE TEMPORARY TABLE temp_audit_table AS select sa.Plant as Plant,sa.CrateBarcode,sa.Barcode,sa.BatchNo,sa.MaterialCode,sa.MaterialDesc,ph.PlantCode as sysPlant,
+        pl.CrateBarcode as sysCrate,pl.Barcode as sysBarcode, pl.BatchNo as sysBatch,pl.MaterialCode as sysMCode,mm.MaterialDesc as MDesc, 0 as Flags 
+        from stockaudit sa ,production_lines pl,material_master mm, production_header ph Where pl.PickFlag = 0 and sa.BatchNo = pl.BatchNo and sa.Barcode = pl.Barcode and 
+        sa.CrateBarcode = pl.CrateBarcode and sa.MaterialCode = pl.MaterialCode and sa.Plant = ph.PlantCode and ph.PDNId = pl.PDNId and 
+		ph.PlantCode = ''',PPlant,''' and pl.MaterialCode = mm.MaterialCode UNION select sa.Plant as Plant,sa.CrateBarcode,sa.Barcode,sa.BatchNo, 
+        sa.MaterialCode,sa.MaterialDesc,ph.PlantCode as sysPlant,pl.CrateBarcode as sysCrate,pl.Barcode as sysBarcode,pl.BatchNo as sysBatch,
+        pl.MaterialCode as sysMCode,mm.MaterialDesc as MDesc, 1 as Flags from stockaudit sa ,production_lines pl,material_master mm, production_header 
+        ph Where sa.BatchNo = pl.BatchNo and sa.Barcode = pl.Barcode and sa.CrateBarcode <> pl.CrateBarcode and sa.MaterialCode = pl.MaterialCode 
+        and sa.Plant = ph.PlantCode and ph.PDNId = pl.PDNId and ph.PlantCode = ''',PPlant,''' and pl.MaterialCode = mm.MaterialCode 
+		Union
+		select Plant as Plant,CrateBarcode,Barcode,BatchNo,MaterialCode,MaterialDesc,sysPlant,sysCrate,sysBarcode,sysBatch,sysMCode,MDesc, Flags 
+        from (select sat.Plant as Plant,sat.CrateBarcode,sat.Barcode,sat.BatchNo,sat.MaterialCode,sat.MaterialDesc,phr.PlantCode as sysPlant,
+        pls.CrateBarcode as sysCrate,pls.Barcode as sysBarcode,pls.BatchNo as sysBatch,pls.MaterialCode as sysMCode,mmr.MaterialDesc as MDesc, 
+        2 as Flags from stockaudit sat Left Join production_lines pls on sat.Barcode = pls.Barcode and sat.CrateBarcode = pls.CrateBarcode and 
+        sat.MaterialCode = pls.MaterialCode Inner Join production_header phr on 
+        sat.Plant = phr.PlantCode and pls.PDNId = phr.PDNId Inner JOIN material_master mmr on 
+        pls.MaterialCode = mmr.MaterialCode Where (pls.PickFlag = 1 or pls.IsStock = 0)) a Where a.Plant = ''',PPlant,'''
+		Union
+		select Plant as Plant,CrateBarcode,Barcode,BatchNo,MaterialCode,MaterialDesc,sysPlant,sysCrate,sysBarcode,sysBatch,sysMCode,MDesc, Flags 
+        from (select sat.Plant as Plant,sat.CrateBarcode,sat.Barcode,sat.BatchNo,sat.MaterialCode,sat.MaterialDesc,phr.PlantCode as sysPlant, 
+        pls.CrateBarcode as sysCrate,pls.Barcode as sysBarcode,pls.BatchNo as sysBatch,pls.MaterialCode as sysMCode,mmr.MaterialDesc as MDesc, 
+        3 as Flags from stockaudit sat RIGHT Join production_lines pls on sat.BatchNo = pls.BatchNo and 
+        sat.Barcode = pls.Barcode and sat.MaterialCode = pls.MaterialCode Inner Join production_header phr on pls.PDNId = phr.PDNId and 
+        phr.PlantCode = ''',PPlant,''' Inner JOIN material_master mmr on pls.MaterialCode = mmr.MaterialCode  where pls.IsStock = 1) a 
+        Where a.Barcode IS NULL and a.sysPlant = ''',PPlant,'''');
+	
+    ELSE 
+		SET @PInnerqry = Concat('CREATE TEMPORARY TABLE temp_audit_table AS select sa.Plant as Plant,sa.CrateBarcode,sa.Barcode,sa.BatchNo,
+        sa.MaterialCode,sa.MaterialDesc, cd.ReceivingPlant as sysPlant,cd.CrateBarcode as sysCrate,cd.Barcode as sysBarcode,cd.BatchNo as sysBatch,
+        cd.MaterialCode as sysMCode,mm.MaterialDesc as MDesc, 0 as Flags from stockaudit sa ,
+		cfagrn_details cd,material_master mm Where sa.BatchNo = cd.BatchNo and sa.Barcode = cd.Barcode and sa.CrateBarcode = cd.CrateBarcode 
+		and sa.MaterialCode = cd.MaterialCode and cd.PickFlag = 0 and cd.cfaPickFlag = 0 and cd.ReceivingPlant = ''',PPlant,''' and 
+		cd.MaterialCode = mm.MaterialCode 
+		UNION 
+		SELECT sa.Plant as Plant, sa.CrateBarcode, sa.Barcode, sa.BatchNo, sa.MaterialCode, sa.MaterialDesc,cd.ReceivingPlant as sysPlant, 
+		cd.CrateBarcode as sysCrate, cd.Barcode as sysBarcode, cd.BatchNo as sysBatch, cd.MaterialCode as sysMCode, mm.MaterialDesc as MDesc, 
+        0 as Flags from stockaudit sa, cfagrn_details cd,
+		material_master mm Where sa.Barcode = cd.Barcode and sa.CrateBarcode = cd.CrateBarcode and sa.BatchNo = cd.BatchNo and 
+		sa.MaterialCode = cd.MaterialCode and cd.PickFlag = 0 and cd.CfaPickFlag = 1 and sa.Plant = cd.StockTransferPlant and 
+		cd.StockTransferPlant = ''',PPlant,''' and sa.Plant = ''',PPlant,''' and cd.MaterialCode = mm.MaterialCode
+		UNION 
+		select sa.Plant as Plant,sa.CrateBarcode,sa.Barcode,sa.BatchNo,sa.MaterialCode,sa.MaterialDesc,cd.ReceivingPlant as sysPlant,
+		cd.CrateBarcode as sysCrate,cd.Barcode as sysBarcode,cd.BatchNo as sysBatch,cd.MaterialCode as sysMCode,mm.MaterialDesc as MDesc, 
+        1 as Flags from stockaudit sa ,cfagrn_details cd,
+		material_master mm Where sa.BatchNo = cd.BatchNo and sa.Barcode = cd.Barcode and sa.CrateBarcode <> cd.CrateBarcode and 
+		sa.MaterialCode = cd.MaterialCode and cd.PickFlag = 0 and cd.cfaPickFlag = 0 and cd.ReceivingPlant = ''',PPlant,''' and 
+		cd.MaterialCode = mm.MaterialCode 
+		UNION 
+		SELECT sa.Plant as Plant, sa.CrateBarcode, sa.Barcode, sa.BatchNo, sa.MaterialCode, sa.MaterialDesc,cd.ReceivingPlant as sysPlant, 
+		cd.CrateBarcode as sysCrate, cd.Barcode as sysBarcode, cd.BatchNo as sysBatch, cd.MaterialCode as sysMCode, mm.MaterialDesc as MDesc, 1 as Flags from stockaudit sa, cfagrn_details cd,
+		material_master mm Where sa.Barcode = cd.Barcode and sa.CrateBarcode <> cd.CrateBarcode and sa.BatchNo = cd.BatchNo and 
+		sa.MaterialCode = cd.MaterialCode and cd.PickFlag = 0 and cd.CfaPickFlag = 1 and sa.Plant = cd.StockTransferPlant and 
+		cd.StockTransferPlant = ''',PPlant,''' and sa.Plant = ''',PPlant,''' and cd.MaterialCode = mm.MaterialCode
+		Union 
+		select Plant as Plant,CrateBarcode,Barcode,BatchNo,MaterialCode,MaterialDesc,sysPlant,sysCrate,sysBarcode,sysBatch,sysMCode,MDesc, 
+		Flags from (select sat.Plant as Plant,sat.CrateBarcode,sat.Barcode,sat.BatchNo,sat.MaterialCode,sat.MaterialDesc,cds.ReceivingPlant as sysPlant, 
+		cds.CrateBarcode as sysCrate,cds.Barcode as sysBarcode,cds.BatchNo as sysBatch,cds.MaterialCode as sysMCode,mmr.MaterialDesc as MDesc, 
+		2 as Flags from stockaudit sat Left Join cfagrn_details cds on sat.Barcode = cds.Barcode and cds.PickFlag = 0 and cds.CfaPickFlag = 1 
+        LEft Join material_master mmr on mmr.MaterialCode = cds.MaterialCode 
+        Union 
+        select sat.Plant as Plant,sat.CrateBarcode,sat.Barcode,sat.BatchNo,sat.MaterialCode,sat.MaterialDesc,cds.StockTransferPlant as sysPlant, 
+		cds.CrateBarcode as sysCrate,cds.Barcode as sysBarcode,cds.BatchNo as sysBatch,cds.MaterialCode as sysMCode,mmr.MaterialDesc as MDesc, 
+		2 as Flags from stockaudit sat Left Join cfagrn_details cds on sat.Barcode = cds.Barcode and cds.PickFlag = 0 and cds.CfaPickFlag = 1 
+        LEft Join material_master mmr on mmr.MaterialCode = cds.MaterialCode)a where a.Plant = ''',PPlant,''' and a.Barcode NOT In(SELECT Barcode 
+        FROM cfagrn_details Where PickFlag = 0 and CfaPickFlag = 0)
+        Union 
+		select Plant as Plant,CrateBarcode,Barcode,BatchNo,MaterialCode,MaterialDesc,sysPlant,sysCrate,sysBarcode,sysBatch,sysMCode,MDesc, Flags 
+		from (select sat.Plant as Plant,sat.CrateBarcode,sat.Barcode,sat.BatchNo,sat.MaterialCode,sat.MaterialDesc,cds.ReceivingPlant as sysPlant, 
+		cds.CrateBarcode as sysCrate,cds.Barcode as sysBarcode,cds.BatchNo as sysBatch,cds.MaterialCode as sysMCode,mmr.MaterialDesc as MDesc, 
+		3 as Flags from stockaudit sat RIGHT Join cfagrn_details cds on sat.BatchNo = cds.BatchNo and sat.Barcode = cds.Barcode and 
+		sat.MaterialCode = cds.MaterialCode and cds.PickFlag = 0 and cds.cfaPickFlag = 0 and cds.ReceivingPlant = ''',PPlant,''' 
+		Inner JOIN material_master mmr on cds.MaterialCode = mmr.MaterialCode where cds.PickFlag = 0 and cds.cfaPickFlag = 0 and cds.ReceivingPlant = ''',PPlant,''' 
+		Union 
+		select sat.Plant as Plant,sat.CrateBarcode,sat.Barcode,sat.BatchNo,sat.MaterialCode,sat.MaterialDesc,cds.StockTransferPlant as sysPlant, 
+		cds.CrateBarcode as sysCrate,cds.Barcode as sysBarcode,cds.BatchNo as sysBatch,cds.MaterialCode as sysMCode,mmr.MaterialDesc as MDesc, 
+		3 as Flags from stockaudit sat RIGHT Join cfagrn_details cds on sat.BatchNo = cds.BatchNo and sat.Barcode = cds.Barcode and 
+		sat.MaterialCode = cds.MaterialCode and cds.PickFlag = 0 and cds.cfaPickFlag = 1 and cds.StockTransferPlant = ''',PPlant,''' 
+		Inner JOIN material_master mmr on cds.MaterialCode = mmr.MaterialCode where cds.PickFlag = 0 and cds.cfaPickFlag = 1 and 
+		cds.StockTransferPlant = ''',PPlant,''') a Where a.Barcode IS NULL and a.sysPlant = ''',PPlant,'''');
+END IF;
+PREPARE stmt FROM @PInnerqry;
+-- select @PInnerqry;
+    EXECUTE stmt;
+    INSERT INTO temp_audit_web (Plant, CrateBarcode, Barcode, BatchNo, MaterialCode, MaterialDesc, sysPlant,sysCrate,sysBarcode,sysBatch,sysMCode,sysMDesc,Flags)
+SELECT 
+    Plant, CrateBarcode, Barcode, BatchNo, MaterialCode, MaterialDesc, sysPlant,sysCrate,sysBarcode,sysBatch,sysMCode,MDesc,Flags
+FROM temp_audit_table;
+    SELECT * FROM temp_audit_web Where (Plant = PPlant or sysPlant = PPlant);
+    
+    DEALLOCATE PREPARE stmt;
+END$$
+DELIMITER ;
+
+
+
+DELIMITER $$
+CREATE DEFINER=`root`@`%` PROCEDURE `StockAdjust`(PPlant VARCHAR(50))
+BEGIN
+DROP TEMPORARY TABLE IF EXISTS audit_hist_table;
+delete from stockaudit_history where PlantCode = PPlant;
+CREATE TEMPORARY TABLE audit_hist_table as SELECT
+    COALESCE(Plant, Plant) AS Plant,MaterialCode,COALESCE(BatchNo, BatchNo) AS Batch,
+    SUM(CASE WHEN CountType = 'Physical Count' THEN Count ELSE 0 END) AS PhysicalCount,
+    SUM(CASE WHEN CountType = 'System Count' THEN Count ELSE 0 END) AS SystemCount
+FROM (SELECT 'Physical Count' AS CountType,Plant,MaterialCode,BatchNo,COUNT(BatchNo) AS Count FROM temp_audit_web WHERE Flags = 2 and Plant = PPlant 
+    GROUP BY BatchNo 
+    UNION ALL
+	SELECT 'System Count' AS CountType,sysPlant,sysMCode as MaterialCode,sysBatch AS BatchNo,COUNT(sysBatch) AS Count FROM temp_audit_web 
+    WHERE Flags = 3 and sysPlant = PPlant GROUP BY sysBatch) AS Counts GROUP BY Batch;
+INSERT INTO stockaudit_history (PlantCode, MaterialCode, BatchNo,PhysicalAdjust, SystemAdjust,AuditOn)
+SELECT Plant, MaterialCode, Batch, PhysicalCount, SystemCount,now() FROM audit_hist_table;
+
+IF(PPlant = '9300') THEN
+START TRANSACTION;
+	Update production_lines pl, temp_audit_web taw set pl.PickFlag = 0,pl.CrateBarcode = taw.CrateBarcode, pl.Adjusted = '2',pl.AuditOn = now() Where taw.Flags = 1 
+	and taw.Plant = PPlant and taw.sysBarcode = pl.Barcode and taw.Barcode = pl.Barcode;
+	IF @error <> 0 THEN
+		ROLLBACK;  -- Rollback the transaction in case of an error
+	ELSE
+
+	Update production_lines pl, temp_audit_web taw set pl.PickFlag = 0,pl.CrateBarcode = taw.CrateBarcode, pl.Adjusted = '+1',pl.AuditOn = now() Where taw.Flags = 2 
+    and taw.sysCrate IS NULL and taw.Plant = PPlant and taw.Barcode = pl.Barcode;
+    END IF;
+	IF @error <> 0 THEN
+		ROLLBACK;  -- Rollback the transaction in case of an error
+	ELSE
+
+	Update production_lines pl, temp_audit_web taw set pl.PickFlag = 1,pl.CrateBarcode = taw.sysCrate, pl.Adjusted = '-1',pl.AuditOn = now() Where taw.Flags = 3 
+    and taw.CrateBarcode IS NULL and taw.sysPlant = PPlant and taw.sysBarcode = pl.Barcode;
+    END IF;
+	IF @error <> 0 THEN
+		ROLLBACK;  -- Rollback the transaction in case of an error
+	ELSE
+		COMMIT;
+	END IF;
+ELSE
+START TRANSACTION;
+	Update cfagrn_details cd, temp_audit_web taw set cd.Adjusted = 0, cd.AuditOn = now() Where taw.Flags = 0 and cd.Barcode= taw.Barcode and 
+    (cd.ReceivingPlant = PPlant or cd.StockTransferPlant = PPlant);
+    IF @error <> 0 THEN
+		ROLLBACK;  -- Rollback the transaction in case of an error
+	ELSE
+	insert into cfagrn_details (GRNNO,GRNDate,TransferGRNNO,TransferGRNDate,FromShipmentNo,FromDeliveryNo,CfaGrnShipmentNo,CfagrnDeliveryNo,
+	FromPlant,ReceivingPlant,StockTransferPlant,PDNDate,MaterialCode,Barcode,CrateBarcode,NewCrateBarcode,RackNo,PutawayDate,PutAwayFlag,
+	Weight,BatchNo,PickFlag,CfaPickFlag,SAPGRNFlag,PickedOn,ToShipmentNo,ToDeliveryNo,TransferDeliveryNo,TransferShipmentNo,Reject,
+	Hold,IsReserved,ReservedShipment,Status,ServerSendFlag,MissingFlag,DispatchBy,StockTransferBy,StockTransferOn,StockReceivedBy,StockReceivedOn,RejectedBy,
+	RejectedOn,Adjusted,AuditOn) SELECT CONCAT(DATE_FORMAT(NOW(), '%Y%m%d%H%i%s')),now(),'','1000-10-10 00:00:00','','','','','9300',PPlant,'',
+	pl.TranDate,pl.MaterialCode,pl.Barcode,taw.CrateBarcode,'',pl.RackNo,now(),1,pl.Weight,pl.BatchNo,0,0,0,'1000-10-10 00:00:00','','','','',0,0,0,
+	'',1,0,0,'','','1000-10-10 00:00:00','','1000-10-10 00:00:00','','1000-10-10 00:00:00','+1',now() 
+	from production_lines pl, temp_audit_web taw Where taw.Flags = 2 and taw.Barcode = pl.Barcode and taw.sysBarcode Is NULL and taw.Plant = PPlant
+	and pl.PickFlag = 1 on DUPLICATE KEY Update PickFlag = 0,Adjusted = '+1', AuditOn = now(),CrateBarcode = taw.CrateBarcode;
+	END IF;
+    IF @error <> 0 THEN
+		ROLLBACK;  -- Rollback the transaction in case of an error
+	ELSE
+
+	insert into cfagrn_details (GRNNO,GRNDate,TransferGRNNO,TransferGRNDate,FromShipmentNo,FromDeliveryNo,CfaGrnShipmentNo,CfagrnDeliveryNo,
+	FromPlant,ReceivingPlant,StockTransferPlant,PDNDate,MaterialCode,Barcode,CrateBarcode,NewCrateBarcode,RackNo,PutawayDate,PutAwayFlag,
+	Weight,BatchNo,PickFlag,CfaPickFlag,SAPGRNFlag,PickedOn,ToShipmentNo,ToDeliveryNo,TransferDeliveryNo,TransferShipmentNo,Reject,
+	Hold,IsReserved,ReservedShipment,Status,ServerSendFlag,MissingFlag,DispatchBy,StockTransferBy,StockTransferOn,StockReceivedBy,StockReceivedOn,RejectedBy,
+	RejectedOn,Adjusted,AuditOn) SELECT CONCAT(DATE_FORMAT(NOW(), '%Y%m%d%H%i%s')),now(),'','1000-10-10 00:00:00','','','','','9300',PPlant,'',
+	pl.TranDate,pl.MaterialCode,pl.Barcode,taw.sysCrate,'',pl.RackNo,now(),1,pl.Weight,pl.BatchNo,1,0,0,'1000-10-10 00:00:00','','','','',0,0,0,
+	'',1,0,0,'','','1000-10-10 00:00:00','','1000-10-10 00:00:00','','1000-10-10 00:00:00','-1',now() 
+	from production_lines pl, temp_audit_web taw Where taw.Flags = 3 and taw.sysBarcode = pl.Barcode and taw.Barcode Is NULL and taw.sysPlant = PPlant
+	and pl.PickFlag = 1 on DUPLICATE KEY Update PickFlag = 1,Adjusted = '-1', AuditOn = now(),CrateBarcode = taw.sysCrate;
+	
+    END IF;
+    IF @error <> 0 THEN
+		ROLLBACK;  -- Rollback the transaction in case of an error
+	ELSE
+    
+    Update cfagrn_details cd, temp_audit_web taw set cd.CrateBarcode = taw.CrateBarcode, PickFlag = 0, Adjusted = '2', AuditOn = now() Where taw.Flags = 1 and 
+    cd.Barcode = taw.Barcode and taw.Plant = PPlant;
+    
+    END IF;
+    IF @error <> 0 THEN
+		ROLLBACK;  -- Rollback the transaction in case of an error
+	ELSE
+		COMMIT;
+	END IF;
+END IF;
+ delete from stockaudit Where Plant = PPlant;
+-- SELECT * FROM stockaudit_history where PlantCode = 'Y002';
+END$$
+DELIMITER ;
+
+
+ALTER TABLE cfagrn_details 
+ADD COLUMN `Adjusted` VARCHAR(20) NOT NULL DEFAULT '' AFTER `RejectedOn`,
+ADD COLUMN `AuditOn` DATETIME NOT NULL DEFAULT '1000-10-10 00:00:00' AFTER `Adjusted`;
+
+ALTER TABLE crate_master 
+ADD COLUMN `CurrentStatus` varchar(50) DEFAULT NULL AFTER `Occupied`,
+ADD COLUMN `Remarks` varchar(100) DEFAULT NULL AFTER `CurrentStatus`;
+
+CREATE TABLE `crate_return_header` (
+  `ShipmentNo` varchar(100) NOT NULL,
+  `Truck_Number` varchar(30) NOT NULL,
+  `Sales_Plant` varchar(50) NOT NULL,
+  `Receiving_Plant` varchar(50) NOT NULL,
+  `ReceivedFlag` int(1) NOT NULL DEFAULT '0',
+  `Total_Qty` int(11) NOT NULL,
+  `Received_Qty` varchar(45) DEFAULT '0',
+  PRIMARY KEY (`ShipmentNo`)
+);
+
+CREATE TABLE `crate_return_lines` (
+  `ShipmentNo` varchar(100) NOT NULL,
+  `CrateBarcode` varchar(25) DEFAULT NULL,
+  `Receiving_Plant` varchar(50) DEFAULT NULL,
+  `ReceivedFlag` int(1) NOT NULL DEFAULT '0',
+  `ReceivedBy` varchar(10) DEFAULT NULL,
+  `ReceivedOn` datetime DEFAULT NULL,
+  `SendFlag` int(1) NOT NULL DEFAULT '0'
+);
+
+CREATE TABLE `crate_status_flag` (
+  `Id` int(11) NOT NULL,
+  `FlagDesc` varchar(50) NOT NULL,
+  PRIMARY KEY (`Id`)
+);
+
+CREATE TABLE `crate_transfer_header` (
+  `TrackingId` varchar(20) NOT NULL,
+  `Truck_Number` varchar(30) DEFAULT NULL,
+  `Sending_Plant` varchar(50) DEFAULT NULL,
+  `Receiving_Plant` varchar(50) DEFAULT NULL,
+  `Total_Qty` varchar(10) DEFAULT NULL,
+  `ReceivedFlag` int(1) NOT NULL DEFAULT '0',
+  `Received_Qty` varchar(10) DEFAULT NULL,
+  `Damage_Qty` int(10) DEFAULT NULL,
+  `DispatchBy` varchar(10) DEFAULT NULL,
+  `DispatchOn` datetime DEFAULT NULL,
+  PRIMARY KEY (`TrackingId`)
+);
+
+CREATE TABLE `crate_transfer_lines` (
+  `SlNo` int(15) NOT NULL AUTO_INCREMENT,
+  `TrackingId` varchar(20) DEFAULT NULL,
+  `CrateBarcode` varchar(30) DEFAULT NULL,
+  `Receiving_Plant` varchar(50) DEFAULT NULL,
+  `ReceivedFlag` int(1) DEFAULT '0',
+  `ReceivedBy` varchar(10) DEFAULT NULL,
+  `ReceivedOn` datetime DEFAULT NULL,
+  PRIMARY KEY (`SlNo`)
+);
+
+ALTER TABLE production_lines 
+ADD COLUMN `Adjusted` VARCHAR(20) NOT NULL DEFAULT '' AFTER `DispatchBy`,
+ADD COLUMN `AuditOn` DATETIME NOT NULL DEFAULT '1000-10-10 00:00:00' AFTER `Adjusted`;
+
+ALTER TABLE sapdispatchorderheader 
+ADD COLUMN `CrateReturnFlag` int(1) NOT NULL DEFAULT '0' AFTER `CreatedOn`;
+
+CREATE TABLE `stockaudit` (
+  `StockAuditId` varchar(15) NOT NULL DEFAULT '',
+  `Plant` varchar(30) NOT NULL DEFAULT '',
+  `RackNo` varchar(15) NOT NULL DEFAULT '',
+  `CrateBarcode` varchar(30) NOT NULL DEFAULT '',
+  `Barcode` varchar(30) NOT NULL DEFAULT '',
+  `BatchNo` varchar(30) NOT NULL DEFAULT '',
+  `MaterialCode` varchar(30) NOT NULL DEFAULT '',
+  `MaterialDesc` varchar(60) NOT NULL DEFAULT '',
+  `ScannedOn` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `ScannedBy` varchar(30) NOT NULL DEFAULT '',
+  PRIMARY KEY (`Barcode`)
+);
+
+CREATE TABLE `stockaudit_history` (
+  `PlantCode` varchar(50) NOT NULL DEFAULT '',
+  `MaterialCode` varchar(50) NOT NULL DEFAULT '',
+  `BatchNo` varchar(50) NOT NULL DEFAULT '',
+  `PhysicalAdjust` int(11) NOT NULL DEFAULT '0',
+  `SystemAdjust` int(11) NOT NULL DEFAULT '0',
+  `AuditOn` datetime DEFAULT NULL
+);
+
+CREATE TABLE `temp_audit_web` (
+  `Plant` varchar(200) DEFAULT NULL,
+  `CrateBarcode` varchar(200) DEFAULT NULL,
+  `Barcode` varchar(200) DEFAULT NULL,
+  `BatchNo` varchar(200) DEFAULT NULL,
+  `MaterialCode` varchar(200) DEFAULT NULL,
+  `MaterialDesc` varchar(200) DEFAULT NULL,
+  `sysPlant` varchar(200) DEFAULT NULL,
+  `sysCrate` varchar(200) DEFAULT NULL,
+  `sysBarcode` varchar(200) DEFAULT NULL,
+  `sysBatch` varchar(200) DEFAULT NULL,
+  `sysMCode` varchar(200) DEFAULT NULL,
+  `sysMDesc` varchar(200) DEFAULT NULL,
+  `Flags` int(11) DEFAULT '0'
+);
+
+CREATE TABLE `temp_tble_stockaudit` (
+  `Plant` varchar(30) NOT NULL DEFAULT '',
+  `RackNo` varchar(15) NOT NULL DEFAULT '',
+  `CrateBarcode` varchar(30) NOT NULL DEFAULT '',
+  `Barcode` varchar(30) NOT NULL DEFAULT '',
+  `BatchNo` varchar(30) NOT NULL DEFAULT '',
+  `MaterialCode` varchar(30) NOT NULL DEFAULT '',
+  `MaterialDesc` varchar(60) NOT NULL DEFAULT '',
+  `ScannedOn` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `ScannedBy` varchar(30) NOT NULL DEFAULT '',
+  PRIMARY KEY (`Barcode`)
+);
+
+
+//Above mentioned SOP are updated in Naga Production Server Database on 06-11-2023

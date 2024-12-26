@@ -1,0 +1,679 @@
+﻿    @model NagaMaster.Models.UnitModel
+<div class="header-container fixed-top">
+    <header class="header navbar navbar-expand-sm">
+        <ul class="navbar-item flex-row">
+            <div class="sub-header-container">
+                <header class="header navbar navbar-expand-sm">
+                    <a href="javascript:void(0);" class="sidebarCollapse" data-placement="bottom">
+                        <i class="las la-bars"></i>
+                    </a>
+                    <ul class="navbar-nav flex-row">
+                        <li>
+                            <div class="page-header">
+                                <nav class="breadcrumb-one" aria-label="breadcrumb">
+                                    <ol class="breadcrumb">
+                                        <li class="breadcrumb-item active"><a href="javascript:void(0);">Master Pages</a></li>
+                                    </ol>
+                                </nav>
+                            </div>
+                        </li>
+                    </ul>
+                </header>
+            </div>
+            <li class="heading-nav nav-item dropdown fullscreen-dropdown d-none d-lg-flex">
+                @*PlantName :*@ @Request.Cookies["PlantName"].Value.ToString()
+            </li>
+        </ul>
+        <ul class="navbar-item flex-row ml-md-auto">
+            <li class="nav-item dropdown fullscreen-dropdown d-none d-lg-flex">
+                <a class="nav-link full-screen-mode d-flex align-center" href="javascript:void(0);">
+                    <i class="las la-compress pr-2" id="fullScreenIcon"></i>Full Display
+                </a>
+            </li>
+            <li class="nav-item dropdown notification-dropdown">
+                <a href="javascript:void(0);" class="nav-link dropdown-toggle position-relative" id="notificationDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <i class="las la-bell"></i>
+                    <div class="blink">
+                        <div class="circle"></div>
+                    </div>
+                </a>
+                <div class="dropdown-menu position-absolute" aria-labelledby="notificationDropdown">
+                    <div class="nav-drop is-notification-dropdown">
+
+                    </div>
+                </div>
+            </li>
+            <li class="nav-item dropdown user-profile-dropdown d-flex align-items-center pr-4">
+                <a href="javascript:void(0);" class="nav-link dropdown-toggle user" id="userProfileDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                    <div class="d-flex flex-column text-right">
+                        <span class="font-12 strong lh-normal">Welcome! @Request.Cookies["EmpDesc"].Value.ToString()</span>
+                        <span class="font-11 lighter lh-normal">@Request.Cookies["RoleName"].Value.ToString()</span>
+                    </div>
+                    <img src="~/assets/img/new-pizza.jpg" alt="avatar">
+                </a>
+                <div class="dropdown-menu position-absolute" aria-labelledby="userProfileDropdown">
+                    <div class="nav-drop is-account-dropdown">
+                        <div class="inner">
+                            <div class="nav-drop-body account-items p-0">
+                                <a id="profile-link" class="account-item" href="pages_profile.html">
+                                    <div class="media align-center">
+                                        <div class="media-left">
+                                            <div class="image">
+                                                <img class="rounded-circle avatar-xs" src="~/assets/img/new-pizza.jpg" alt="">
+                                            </div>
+                                        </div>
+                                        <div class="media-content ml-3">
+                                            <h6 class="font-13 mb-0 strong">@Request.Cookies["EmpDesc"].Value.ToString()</h6>
+                                            <small>@Request.Cookies["RoleName"].Value.ToString()</small>
+                                        </div>
+                                        <div class="media-right">
+                                            <i data-feather="check"></i>
+                                        </div>
+                                    </div>
+                                </a>
+                                <a class="account-item" href="pages_profile.html">
+                                    <div class="media align-center">
+                                        <div class="icon-wrap">
+                                            <i class="las la-user font-20"></i>
+                                        </div>
+                                        <div class="media-content ml-3">
+                                            <h6 class="font-13 mb-0 strong">My Account</h6>
+                                        </div>
+                                    </div>
+                                </a>
+                                <a class="account-item" href="pages_timeline.html">
+                                    <div class="media align-center">
+                                        <div class="icon-wrap">
+                                            <i class="las la-briefcase font-20"></i>
+                                        </div>
+                                        <div class="media-content ml-3">
+                                            <h6 class="font-13 mb-0 strong">My Activity</h6>
+                                        </div>
+                                    </div>
+                                </a>
+                                <a class="account-item settings">
+                                    <div class="media align-center">
+                                        <div class="icon-wrap">
+                                            <i class="las la-cog font-20"></i>
+                                        </div>
+                                        <div class="media-content ml-3">
+                                            <h6 class="font-13 mb-0 strong">Settings</h6>
+                                        </div>
+                                    </div>
+                                </a>
+                                <hr class="account-divider">
+                                <a class="account-item" href="~/Login/LoginPage">
+                                    <div class="media align-center">
+                                        <div class="icon-wrap">
+                                            <i class="las la-sign-out-alt font-20"></i>
+                                        </div>
+                                        <div class="media-content ml-3">
+                                            <h6 class="font-13 mb-0 strong ">Logout</h6>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </header>
+</div>
+<!-- Main Body Starts -->
+<div class="layout-px-spacing">
+    <div class="row layout-top-spacing">
+        <div class="col-xl-12 col-lg-12 col-sm-12  layout-spacing">
+            <div class="widget-content widget-content-area br-6">
+                <h4 class="table-header mb-4">Unit Master</h4>
+                <div class="toggle-list col-sm-12">
+                    <div class="row e-tools mb-4">
+                        <div class="col-sm-12 Export-Tools">
+                            @if (ViewBag.IsEdit == 1)
+                            {
+
+                                @*<div class="ex-im">
+                                    <button class="btn btn-info" data-toggle="modal" data-target=".item-modal" tabindex="0" data-dismiss="modal">
+                                        <i class="las la-file-import la-lg pr-2"></i>Import
+                                    </button>
+                                    <button type="button" class="btn btn-success float-left"><i class="las la-lg la-file-download pr-2"></i>Export</button>
+                                </div>*@
+                                <div class="add-s">
+                                    @*<div class="dropdown Filter">
+                                        <button class="btn dropdown-toggle" type="button"
+                                                data-toggle="dropdown"
+                                                aria-haspopup="true" aria-expanded="false">
+                                            Filter <i class="las la-angle-double-down la-lg pl-1 icon-large"></i>
+                                        </button>
+                                        <div class="dropdown-menu">
+
+                                            <a class="toggle-btn mb-4 mr-2" data-column="1">
+                                                <div class="form-check">
+                                                    <input class="form-check-input check flexCheckDefault"
+                                                           type="checkbox" data-column="1" checked>
+                                                    <label class="form-check-label">
+                                                        Plant Name
+                                                    </label>
+                                                </div>
+                                            </a>
+
+                                            <a class="toggle-btn mb-4 mr-2" data-column="2">
+                                                <div class="form-check">
+                                                    <input class="form-check-input check" type="checkbox"
+                                                           data-column="2" checked>
+                                                    <label class="form-check-label">
+                                                        Unit Name
+                                                    </label>
+                                                </div>
+                                            </a>
+
+                                            <a class="toggle-btn mb-4 mr-2" data-column="3">
+                                                <div class="form-check">
+                                                    <input class="form-check-input check" type="checkbox"
+                                                           data-column="3" checked>
+                                                    <label class="form-check-label">
+                                                        Systems
+                                                    </label>
+                                                </div>
+                                            </a>
+
+                                            <a class="toggle-btn mb-4 mr-2" data-column="4">
+                                                <div class="form-check">
+                                                    <input class="form-check-input check" type="checkbox"
+                                                           data-column="4" checked>
+                                                    <label class="form-check-label">
+                                                        Status
+                                                    </label>
+                                                </div>
+                                            </a>
+
+                                        </div>
+                                    </div>*@
+                                    <div id="headingOne1">
+                                        <section class="mb-0 mt-0">
+                                            <button type="button" class="btn" onclick="funclear(0)" data-toggle="modal" data-target=".unit-modal">
+                                                <i class="las la-plus-circle la-lg"></i>Add Unit
+                                            </button>
+                                        </section>
+                                    </div>
+                                </div>
+                            }
+
+                            </div>
+
+                        <div class="col-sm-6 add-s">
+
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Add item Modal Starts -->
+
+                <div id="UnitModal" class="modal fade unit-modal" tabindex="-1"
+                     role="dialog" aria-labelledby="exampleModal-supplierLabel"
+                     aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title">
+                                    Unit Master
+                                </h5>
+                                <button type="button" class="close" data-dismiss="modal"
+                                        aria-label="Close">
+                                    <i class="las la-times" style="border-radius: 3px;"></i>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="media-body">
+                                    @*@using (Html.BeginForm("AddUnits", "Home", FormMethod.Post)) {*@
+                                    <input type="hidden" id="UnitsId" value="" />
+                                        <div class="item-input-lane1 row">
+                                            <div class="form-group col-sm-4">
+                                                <label class="col-form-label pl-2">Unit Id</label>
+                                                <div class="">
+                                                    <input class="form-control"
+                                                           type="text" id="UnitId"
+                                                           placeholder="SWRE-245">
+                                                </div>
+                                            </div>
+                                            <div class="form-group col-sm-4">
+                                                <label class="col-form-label pl-2">Unit Name</label>
+                                                <div class="">
+                                                    <input class="form-control" id="UnitName"
+                                                           type="text">
+                                                </div>
+                                            </div>
+                                            <div class="form-group col-sm-4">
+
+                                                <label class="col-form-label col-sm-12">
+                                                    Plant
+                                                </label>
+                                                    <div class="col-sm-12">
+                                                        @Html.DropDownListFor(x => x.PlantId, new SelectList(Model.PlantDetails, "Value", "Text"), "--- Select ---", new { @class = "form-control", name = "PlantId" })
+                                                    </div>
+                                                </div>
+                                        </div>
+                                        <div class="item-input-lane2 row">
+                                            <div class="form-group col-sm-4">
+                                                <label class="col-form-label col-sm-12">
+                                                    Status
+                                                </label>
+                                                <div class="col-sm-12">
+                                                    <select class="form-control w-100" id="Status">
+                                                        <option value="1" selected="selected" >Active</option>
+                                                        <option value="0">Inactive</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="form-group col-sm-4">
+
+                                            </div>
+                                            <div class="form-group col-sm-4">
+
+                                            </div>
+                                        </div>
+                                        <div class="assign-input-lane6 row">
+                                            <div class="col-sm-1"></div>
+                                            <div class="form-group col-sm-10 system-check card" id="Systems">
+                                                <div class="card-header">
+                                                    <label>Select Systems:</label>
+                                                </div>
+                                                <div class="checkbox-inline ml-sm-5" style="display: flex;flex-direction:row;justify-content: space-between;align-items: center;height: 50px;">
+                                                    @for (int i = 0; i < Model.System.Count(); i++)
+                                                    {
+                                                    <label class="checkbox">
+                                                        <input type="checkbox" name="Systems" class="mr-2" value="@Model.System[i].Value">@Model.System[i].Text
+                                                    </label>
+                                                    }
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-1"></div>
+                                        </div>
+                                    @*}*@
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="submit" class="btn btn-success" onclick="fnsave()"> Save </button>
+                                <button class="btn btn-warning" type="reset" onclick="funclear(1)"> <i class="flaticon-cancel-12"></i> Clear </button>
+
+                            </div>
+                        </div>
+                    </div>
+                    <!-- import modal starts -->
+
+
+                </div>
+
+                <!-- Add item Modal Ends -->
+
+
+                <div class="table-responsive mb-4">
+                    <table id="tblUnit" class="table table-hover item-mast " role="grid" style="width:100%">
+
+                        @*<tfoot>
+                            <tr>
+                                <th>Edit</th>
+                                <th>Sl No</th>
+                                <th>Plant Name</th>
+                                <th>Unit Name</th>
+                                <th>Systems</th>
+                                <th>Status</th>
+
+                                <th>Delete</th>
+                            </tr>
+                        </tfoot>*@
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Main Body Ends -->
+<!-- Import Modal Starts -->
+
+<div class="modal fade item-modal" tabindex="-1" srole="dialog" aria-labelledby="exampleModal-supplierLabel"
+     aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable modal-xl modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Import Data</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i class="las la-times" style="border-radius: 3px;"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="media-body">
+                    <div class="supplierReport-input-lane1 row">
+                        <div class="form-group col-sm-6">
+                            <h6 class="ml-5">Import Template Format</h6>
+                            <button class="btn btn-info ml-5">Download Template</button>
+                        </div>
+                        <div class="form-group col-sm-3">
+                            <label for="formFile" class="form-label ml-5">Choose File</label>
+                            <input type="file" class="ml-5">
+                        </div>
+                        <div class="form-group col-sm-3">
+                            <div class="file-upload">
+                                <button class="btn btn-info">Upload</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="supplierReport-input-lane2 row mt-3">
+                        <div class="form-group col-sm-12">
+
+                            <!-- Excel Grid Data Starts-->
+
+                            <div class="row">
+                                <div class="col">
+                                    <div class="multiCollapseReport">
+                                        <div class="card">
+                                            <table class="table mb-5 col-sm-12 freeze-table  display nowrap" style="background-color: white; width: 100%;">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Name</th>
+                                                        <th>Code</th>
+                                                        <th>Phone Number</th>
+                                                        <th>Email</th>
+                                                        <th>Address</th>
+                                                        <th>Tax Number</th>
+                                                        <th>Descriptions</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td>Sundhar P</td>
+                                                        <td>NTS010</td>
+                                                        <td>7854695241</td>
+                                                        <td>Sundhar@gmail.com</td>
+                                                        <td>Triplicane</td>
+                                                        <td>GHTFD34212</td>
+                                                        <td>DotNetDeveloper</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Arun M</td>
+                                                        <td>NTS007</td>
+                                                        <td>9597026798</td>
+                                                        <td>arun@gmail.com</td>
+                                                        <td>Saidapet</td>
+                                                        <td>GTYFFD34212</td>
+                                                        <td>Web Designer & Developer</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Prakash A</td>
+                                                        <td>NTS017</td>
+                                                        <td>9597776062</td>
+                                                        <td>Prakash@gmail.com</td>
+                                                        <td>Mandaveli</td>
+                                                        <td>HTYUUID388712</td>
+                                                        <td>Web Developer</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Sundhar P</td>
+                                                        <td>NTS010</td>
+                                                        <td>7854695241</td>
+                                                        <td>Sundhar@gmail.com</td>
+                                                        <td>Triplicane</td>
+                                                        <td>GHTFD34212</td>
+                                                        <td>DotNetDeveloper</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Sundhar P</td>
+                                                        <td>NTS010</td>
+                                                        <td>7854695241</td>
+                                                        <td>Sundhar@gmail.com</td>
+                                                        <td>Triplicane</td>
+                                                        <td>GHTFD34212</td>
+                                                        <td>DotNetDeveloper</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Sundhar P</td>
+                                                        <td>NTS010</td>
+                                                        <td>7854695241</td>
+                                                        <td>Sundhar@gmail.com</td>
+                                                        <td>Triplicane</td>
+                                                        <td>GHTFD34212</td>
+                                                        <td>DotNetDeveloper</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Excel Grid Data Ends -->
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-danger" data-dismiss="modal">
+                    <i class="flaticon-cancel-12"></i>
+                    Discard
+                </button>
+                <button type="submit" class="btn btn-primary">Save</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Import Modal Ends -->
+
+
+<script>
+    $(document).ready(function () {
+        LoadGrid();
+    });
+
+    function LoadGrid() {
+        var dataset = new Array();
+        $.ajax({
+            type: "GET",
+            url: "/Home/GetUnits",
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (jsonData) {
+
+
+                if (jsonData != null) {
+                    len = jsonData.length;
+                    console.log(jsonData);
+                    if ($.fn.DataTable.fnIsDataTable("#tblUnit"))
+                        $("#tblUnit").dataTable().fnDestroy();
+
+                    if (len == 0)
+                        alert("No Data Found !");
+
+
+                    for (i = 0; i < len; i++) {
+
+                        jsonData[i].PlantName += '-' + jsonData[i].PlantId;
+
+                        var Status = jsonData[i].Status == 1 ? "Active" : "Inactive";
+
+                        dataset.push(["<div class=\"text-center flex\"><a href=\"#\" class=\"tableIconA bs-tooltip\" data-toggle=\"modal\"  " +
+                            "onclick=\"fundetails('" + jsonData[i].Id + "','" + jsonData[i].UnitId + "','" + jsonData[i].UnitName + "','" + jsonData[i].PlantId + "','" + jsonData[i].Systems +
+                            "','" + jsonData[i].Status + "')\"><i class=\"las la-edit font-20 text-primary\"aria-hidden=\"true\"style=\"color: #0056b3!important;font-size: 20px;\"></i></a></div>",(i + 1), jsonData[i].PlantName, jsonData[i].UnitName,
+                        jsonData[i].Systems, Status,
+
+
+
+
+
+                        "<div class=\"text-center flex\"><a href=\"#\" class=\"tableIconA bs-tooltip\"  " +
+                        "onclick=\"fndelete('" + jsonData[i].Id + "') \"><i class=\"las la-trash \" aria-hidden=\"true\" style=\"color: tomato;font-size: 20px;\"></i></a></div>"])
+
+
+
+                    }
+
+                    $('#tblUnit').DataTable({
+
+                        "autoWidth": true,
+                        "sScrollY": "300px",
+                        "sScrollX": "100%",
+                        "language": {
+                            "paginate": {
+                                "previous": "<i class='las la-angle-left'></i>",
+                                "next": "<i class='las la-angle-right'></i>"
+                            }
+                        },
+                        'aoColumnDefs': [{
+                            'visible': Boolean(@(ViewBag.IsEdit)),
+                            'aTargets' : 6
+                        }, {
+                            'visible': Boolean(@(ViewBag.IsEdit)),
+                           'aTargets' : 0
+                           }],
+                        data: dataset,
+                        columns: [{ title: "Edit" }, { title: "Sl No" }, { title: "Plant Name" }, { title: "Unit Name" }, { title: "Systems" }, { title: "Status" },  { title: "Delete" }]
+                    });
+
+                } else {
+                    alert("something went wrong");
+                }
+            }
+        });
+    }
+
+
+    function fnsave() {
+
+        var systems = '';
+
+        $('input[name="Systems"]:checked').each(function () {
+            console.log(this.value);
+            systems += this.value + ',';
+        });
+        if (systems != '')
+            systems = systems.substr(0, systems.length - 1);
+        else {
+            toastr.error('Please Select Systems');
+            return true;
+        }
+
+        console.log(systems);
+
+        let UnitId = document.getElementById("UnitId").value;
+        let UnitName = document.getElementById('UnitName').value;
+
+
+        if (UnitId == "") {
+            toastr.error('Please Enter UnitId');
+            return true;
+        }
+        if (UnitName == "") {
+
+            toastr.error('Please Enter UnitName');
+            return true;
+        }
+
+        var purl = '';
+        var ptype = '';
+
+
+        if ($('#UnitsId').val() == '' || $('#UnitsId').val() == 0) {
+            purl = "/Home/AddUnits";
+            ptype = "POST";
+            $('#UnitsId').val(0);
+
+        }
+        else {
+            purl = "/Home/EditUnits";
+            ptype = "POST";
+
+        }
+
+        $.ajax({
+            type: ptype,
+            url: purl,
+            data: JSON.stringify({
+                "id": parseInt($('#UnitsId').val()),
+                "UnitId": $('#UnitId').val(),
+                "UnitName": $('#UnitName').val(),
+                "PlantId": $('#PlantId').val(),
+                "Systems": systems,
+                "Status": $('#Status').val(),
+                "CreatedBy": 1,
+                "CreatedOn": new Date(),
+                "Updatedby": 1,
+                "UpdatedOn": new Date(),
+
+            }),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (response) {
+                console.log(response);
+                if (response.Success == 0) {
+                    toastr.error(response.Message);
+                }
+                else if (response.Success == 1) {
+                    toastr.success(response.Message);
+                    funclear(1);
+                    LoadGrid();
+                }
+                else {
+                    toastr.error('something went wrong' + response.Message);
+                }
+            }
+        });
+    }
+
+    function funclear(a) {
+        $('#UnitsId').val("");
+        $('#UnitId').val("");
+        $('#UnitName').val("");
+        $('#PlantId').val("");
+        $('#Systems').val("");
+        $('#Status').val(1);
+
+
+        if (a == 0)
+            $('#UnitModal').modal("show");
+        else
+            $('#UnitModal').modal("hide");
+    }
+
+    function fundetails(a, b, c, d, e, f) {
+        $('#UnitsId').val(a);
+        $('#UnitId').val(b);
+        $('#UnitName').val(c);
+        $('#PlantId').val(d);
+        $('#Systems').val(e);
+        if (f == '1')
+            $('#Status').val(1);
+        else
+            $('#Status').val(0);
+
+        $('#UnitModal').modal("show");
+
+    }
+</script>
+
+<script>
+    function fndelete(id) {
+        if (confirm("Do you want to delete this Unit?") == true) {
+            $.ajax({
+
+                type: "POST",
+                url: "/Home/DeleteUnits?Id=" + id,
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+
+                success: function (jsonData) {
+                    if (jsonData.Success == 0) {
+                        toastr.error(jsonData.Message);
+                    }
+                    else if (jsonData.Success == 1) {
+                        toastr.success(jsonData.Message);
+                    }
+                    LoadGrid();
+                },
+                error: function () {
+                    console.log('error');
+                }
+            });
+        }
+    }
+</script>

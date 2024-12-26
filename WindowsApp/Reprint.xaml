@@ -1,0 +1,11 @@
+﻿<Window x:Class="Naga.Reprint"
+       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Reprint" Height="250" Width="450" WindowStartupLocation="CenterScreen" WindowStyle="None"  >
+    <Grid Background="LightGreen">
+        <Label x:Name="lblBarcode" Content="Barcode Value" HorizontalAlignment="Left" Foreground="Red" FontStyle="Normal" FontFamily="Arial" FontSize="25" FontWeight="Bold" Margin="18,56,0,0" VerticalAlignment="Top"/>
+        <Button x:Name="btnPrint" Content="PRINT"  FontSize="20" HorizontalAlignment="Left" Margin="92,169,0,0" VerticalAlignment="Top" Width="108" Height="36" Background="#6E6E6E" FontWeight="Bold" Click="btnPrint_Click"/>
+        <Button x:Name="btnClose" Content="CLOSE"  FontSize="20" HorizontalAlignment="Left" Margin="246,169,0,0" VerticalAlignment="Top" Width="98" Height="36" Background="#6E6E6E" FontWeight="Bold" Click="btnClose_Click"/>
+        <TextBox x:Name="txtBarcode" HorizontalAlignment="Left" Height="39" Margin="220,56,0,0" Text="" VerticalAlignment="Top" Width="212" FontStyle="Normal" FontFamily="Arial" FontSize="25" FontWeight="Bold" TextAlignment="Center"/>
+    </Grid>
+</Window>

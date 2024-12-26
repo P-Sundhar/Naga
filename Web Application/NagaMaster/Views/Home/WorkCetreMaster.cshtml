@@ -1,0 +1,338 @@
+﻿
+
+<div class="layout-px-spacing">
+    <div class="row layout-top-spacing">
+        <div class="col-xl-12 col-lg-12 col-sm-12  layout-spacing">
+            <div class="widget-content widget-content-area br-6">
+                <h4 class="table-header mb-4">Work Center</h4>
+                <div class="toggle-list col-sm-12">
+                    <div class="row e-tools mb-4">
+                        <div class="col-sm-3 Export-Tools">
+                            <div class="ex-im">
+                                <button class="btn btn-info" data-toggle="modal" data-target=".item-modal">
+                                    <i class="las la-file-import la-lg pr-2"></i>Import
+                                </button>
+                                <button type="button" class="btn btn-info"><i class="las la-lg la-file-download pr-2"></i>Export</button>
+                            </div>
+                        </div>
+                        <div class="col-sm-3">
+                            <div class="add-s">
+                                <div class="dropdown Filter">
+                                    <button class="btn dropdown-toggle" type="button"
+                                            data-toggle="dropdown"
+                                            aria-haspopup="true" aria-expanded="false">
+                                        Filter <i class="las la-angle-double-down la-lg pl-1 icon-large"></i>
+                                    </button>
+                                    <div class="dropdown-menu">
+
+                                        <a class="toggle-btn mb-4 mr-2" data-column="2">
+                                            <div class="form-check">
+                                                <input class="form-check-input check flexCheckDefault"
+                                                       type="checkbox" data-column="2" checked>
+                                                <label class="form-check-label">
+                                                    Plant Code
+                                                </label>
+                                            </div>
+                                        </a>
+
+                                        <a class="toggle-btn mb-4 mr-2" data-column="3">
+                                            <div class="form-check">
+                                                <input class="form-check-input check" type="checkbox"
+                                                       data-column="3" checked>
+                                                <label class="form-check-label">
+                                                    Plant Desc
+                                                </label>
+                                            </div>
+                                        </a>
+
+                                        <a class="toggle-btn mb-4 mr-2" data-column="4">
+                                            <div class="form-check">
+                                                <input class="form-check-input check" type="checkbox"
+                                                       data-column="4" checked>
+                                                <label class="form-check-label">
+                                                    Machine Name
+                                                </label>
+                                            </div>
+                                        </a>
+
+                                        <a class="toggle-btn mb-4 mr-2" data-column="5">
+                                            <div class="form-check">
+                                                <input class="form-check-input check" type="checkbox"
+                                                       data-column="5" checked>
+                                                <label class="form-check-label">
+                                                    Machine Number
+                                                </label>
+                                            </div>
+                                        </a>
+
+                                        <a class="toggle-btn mb-4 mr-2" data-column="6">
+                                            <div class="form-check">
+                                                <input class="form-check-input check" type="checkbox"
+                                                       data-column="6" checked>
+                                                <label class="form-check-label">
+                                                    Status
+                                                </label>
+                                            </div>
+                                        </a>
+
+                                    </div>
+                                </div>
+                                <div id="headingOne1" class="pl-2">
+                                    <section class="mb-0 mt-0">
+                                        <button type="button" class="btn" onclick="funclear(0)" style="width: 190px;" data-toggle="modal" data-target=".workcenter-modal">
+                                            <i class="las la-plus-circle la-lg"></i>Add Work Center
+                                        </button>
+                                    </section>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-6 add-s">
+
+                        </div>
+                    </div>
+                </div>
+
+                <div id="WorkModal" class="modal fade workcenter-modal" tabindex="-1"
+                     role="dialog" aria-labelledby="exampleModal-supplierLabel"
+                     aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title">
+                                    Work Center
+                                </h5>
+                                <button type="button" class="close" data-dismiss="modal"
+                                        aria-label="Close">
+                                    <i class="las la-times" style="border-radius: 3px;"></i>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="media-body">
+                                    <form action="" method="post">
+                                        <div class="item-input-lane1 row">
+                                            <div class="form-group col-sm-4">
+                                                <label class="col-form-label pl-2">Plant Code</label>
+                                                <div class="">
+                                                    <input class="form-control" id="PlantCode"
+                                                           type="text"
+                                                           placeholder="SWRE-245">
+                                                </div>
+                                            </div>
+                                            <div class="form-group col-sm-4">
+                                                <label class="col-form-label pl-2">Plant Desc</label>
+                                                <div class="">
+                                                    <input class="form-control" id="PlantDesc"
+                                                           type="text">
+                                                </div>
+                                            </div>
+                                            <div class="form-group col-sm-4">
+
+                                                <label class="col-form-label pl-2">Machine Name</label>
+                                                <div class="">
+                                                    <input class="form-control" id="MachineName"
+                                                           type="text">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="item-input-lane2 row">
+                                            <div class="form-group col-sm-4">
+                                                <label class="col-form-label pl-2">Machine Number</label>
+                                                <div class="">
+                                                    <input class="form-control" id="MachineNumber"
+                                                           type="text">
+                                                </div>
+                                            </div>
+                                            <div class="form-group col-sm-4">
+                                                <label class="col-form-label col-sm-12">
+                                                    Status
+                                                </label>
+                                                <div class="">
+                                                    <select class="form-control">
+                                                        <option selected="selected" value="1">Active</option>
+                                                        <option value="0">Inactive</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="form-group col-sm-4">
+
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="submit" onclick="fnsave()" class="btn btn-success"> Save </button>
+                                <button class="btn btn-warning" onclick="funclear(1)" type="reset"><i class="flaticon-cancel-12"></i> Clear </button>
+
+                            </div>
+                        </div>
+                    </div>
+                    <!-- import modal starts -->
+
+
+                </div>
+
+                <div class="table-responsive mb-4">
+                    <table class="table table-hover item-mast " style="width:100%">
+                        <thead>
+                            <tr>
+                                <th>Edit</th>
+                                <th>ID</th>
+                                <th>Plant Code</th>
+                                <th>Plant Desc</th>
+                                <th>Machine Name</th>
+                                <th>Machine Number</th>
+                                <th>Status</th>
+                                <th>Delete</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <a href="#" title="Edit" class="font-20 text-primary">
+                                        <i class="las la-edit"></i>
+                                    </a>
+                                </td>
+                                <td>1</td>
+                                <td>OPUY110</td>
+                                <td>Malt Foods</td>
+                                <td>System 1</td>
+                                <td>FSSYT01</td>
+                                <td>Active</td>
+                                <td>
+                                    <a href="#" title="Edit" class="font-20 text-primary">
+                                        <i class="las la-trash" style="color: tomato;"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <a href="#" title="Edit" class="font-20 text-primary">
+                                        <i class="las la-edit"></i>
+                                    </a>
+                                </td>
+                                <td>2</td>
+                                <td>OPUY210</td>
+                                <td>Packed Foods</td>
+                                <td>System 2</td>
+                                <td>FSSYT21</td>
+                                <td>Active</td>
+                                <td>
+                                    <a href="#" title="Edit" class="font-20 text-primary">
+                                        <i class="las la-trash" style="color: tomato;"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <th>Edit</th>
+                                <th>ID</th>
+                                <th>Plant Code</th>
+                                <th>Plant Desc</th>
+                                <th>Machine Name</th>
+                                <th>Machine Number</th>
+                                <th>Status</th>
+                                <th>Delete</th>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade item-modal" tabindex="-1" srole="dialog" aria-labelledby="exampleModal-supplierLabel"
+     aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable modal-xl modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Import Data</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i class="las la-times" style="border-radius: 3px;"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="media-body">
+                    <div class="supplierReport-input-lane1 row">
+                        <div class="form-group col-sm-6">
+                            <h6 class="ml-5">Import Template Format</h6>
+                            <button class="btn btn-info ml-5">Download Template</button>
+                        </div>
+                        <div class="form-group col-sm-3">
+                            <label for="formFile" class="form-label ml-5">Choose File</label>
+                            <input type="file" class="ml-5">
+                        </div>
+                        <div class="form-group col-sm-3">
+                            <div class="file-upload">
+                                <button class="btn btn-info">Upload</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="supplierReport-input-lane2 row mt-3">
+                        <div class="form-group col-sm-12">
+
+                            <!-- Excel Grid Data Starts-->
+
+                            <div class="row">
+                                <div class="col">
+                                    <div class="multiCollapseReport">
+                                        <div class="card">
+                                            <table class="table mb-5 col-sm-12 freeze-table  display nowrap" style="background-color: white; width: 100%;">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Plant Code</th>
+                                                        <th>Plant Desc</th>
+                                                        <th>Machine Name</th>
+                                                        <th>Machine Number</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td>FSSAI25</td>
+                                                        <td>Malt Items</td>
+                                                        <td>System1</td>
+                                                        <td>FDA88</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>FSSAI55</td>
+                                                        <td>Masala Items</td>
+                                                        <td>System2</td>
+                                                        <td>FDA18</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>FSSAI50</td>
+                                                        <td>Malt Items</td>
+                                                        <td>System1</td>
+                                                        <td>FDA78</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th>Plant Code</th>
+                                                        <th>Plant Desc</th>
+                                                        <th>Machine Name</th>
+                                                        <th>Machine Number</th>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Excel Grid Data Ends -->
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-danger" data-dismiss="modal">
+                    <i class="flaticon-cancel-12"></i>
+                    Discard
+                </button>
+                <button type="submit" class="btn btn-primary">Save</button>
+            </div>
+        </div>
+    </div>
+</div>

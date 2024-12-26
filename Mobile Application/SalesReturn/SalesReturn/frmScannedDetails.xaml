@@ -1,0 +1,53 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="SalesReturn.frmScannedDetails"
+             xmlns:local="clr-namespace:SalesReturn"
+             xmlns:syncfusion="clr-namespace:Syncfusion.SfDataGrid.XForms;assembly=Syncfusion.SfDataGrid.XForms"
+              NavigationPage.HasNavigationBar="False" Title="Scanned Details" NavigationPage.HasBackButton="False">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <local:CustomStyle x:Key="customstyle" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <AbsoluteLayout VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
+            <StackLayout x:Name="lytprocess" Padding="0,0" Spacing="0" AbsoluteLayout.LayoutBounds="0, 0, 1, 1" AbsoluteLayout.LayoutFlags="All">
+                <syncfusion:SfDataGrid x:Name="gdvScannedDetails"  ItemsSource="{Binding plantdtls}" VerticalOverScrollMode="None" HorizontalScrollBarVisibility="True" 
+                                   SelectionMode="None" ColumnSizer="Auto" AllowPullToRefresh="True" GridStyle="{StaticResource customstyle}" AutoGenerateColumns="False"
+                                   VerticalOptions="FillAndExpand" RowHeight="30" HorizontalOptions="FillAndExpand" Padding="0,0" ScrollingMode="Pixel" BackgroundColor="Transparent">
+                <syncfusion:SfDataGrid.Columns>
+                        <syncfusion:GridTextColumn MappingName="PlantId" HeaderText="Plant" HeaderFontAttribute="Bold" HeaderTextAlignment="Center"  TextAlignment="Center"/>
+                        <syncfusion:GridTextColumn MappingName="OutletName" HeaderText="Outlet Name" HeaderFontAttribute="Bold" HeaderTextAlignment="Center" TextAlignment="Start"/>
+                        <syncfusion:GridTextColumn MappingName="RackBarcode" HeaderText="Rack No" HeaderFontAttribute="Bold" HeaderTextAlignment="Center" TextAlignment="Start"/>
+                        <syncfusion:GridTextColumn MappingName="CrateBarcode" HeaderText="Crate Barcode" HeaderFontAttribute="Bold" HeaderTextAlignment="Center" TextAlignment="Center"/>
+                        <syncfusion:GridTextColumn MappingName="SecondaryBarcode" HeaderText="Barcode" HeaderFontAttribute="Bold" HeaderTextAlignment="Center" TextAlignment="Center"/>
+                        <syncfusion:GridTextColumn MappingName="CreatedOn" HeaderText="Scanned On" HeaderFontAttribute="Bold" HeaderTextAlignment="Center" TextAlignment="Start"/>
+                </syncfusion:SfDataGrid.Columns>
+            </syncfusion:SfDataGrid>
+                <Button x:Name="btnBack" Text="Back" VerticalOptions="Center" HorizontalOptions="Center" HeightRequest="40"  Clicked="btnBack_Clicked" 
+                                    BackgroundColor="Red" TextColor="White" FontFamily="Calibri" FontAttributes="Bold" Margin="4,0"></Button>
+            </StackLayout>
+            <StackLayout x:Name="StkActIndicator" IsVisible="False" AbsoluteLayout.LayoutBounds="0,0,1,1"  
+                        AbsoluteLayout.LayoutFlags="All" BackgroundColor="#66000000" 
+                     VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
+                <StackLayout VerticalOptions="CenterAndExpand" WidthRequest="500"  HorizontalOptions="Center" BackgroundColor="White"  Padding="20,20,20,20">
+                    <Grid VerticalOptions="FillAndExpand">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="100"></ColumnDefinition>
+                            <ColumnDefinition Width="*"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"></RowDefinition>
+                            <RowDefinition Height="*"></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <Label x:Name="txtTitle" Text="Please Wait" FontAttributes="Bold" FontSize="Medium" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"></Label>
+                        <ActivityIndicator x:Name="actIndi" IsRunning="True" IsVisible="True" Color="Blue" Grid.Row="1" Grid.Column="0"></ActivityIndicator>
+                        <Label x:Name="lblMessage" Text="Loading ...." VerticalOptions="CenterAndExpand" HorizontalOptions="StartAndExpand" 
+                               VerticalTextAlignment="Center" HorizontalTextAlignment="Center"  Grid.Row="1" Grid.Column="1"></Label>
+                    </Grid>
+                </StackLayout>
+            </StackLayout>
+        </AbsoluteLayout>
+    </ContentPage.Content>
+</ContentPage>

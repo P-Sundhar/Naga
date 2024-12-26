@@ -1,0 +1,34 @@
+﻿<Window x:Class="Naga.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" WindowStartupLocation="CenterScreen" WindowState="Maximized" WindowStyle="None">
+    <Grid x:Name="LoginLayer">
+        <Grid.Background>
+            <ImageBrush Stretch="Fill" ImageSource="Images/oyolaLogin1.jpg"/>
+        </Grid.Background>
+        <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="30*"/>
+                    <RowDefinition Height="28*"/>
+                    <RowDefinition Height="25*"/>
+                    <RowDefinition Height="28*"/>
+                </Grid.RowDefinitions>
+        <TextBox x:Name="txtUserId"  Grid.Column="1" HorizontalAlignment="Center"  MinWidth="100" Width="184" MaxLength="10" Margin="160,38,36,0" Grid.Row="3" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="16" FontWeight="Bold" Height="32"/>
+        <PasswordBox x:Name="txtPassword"  Grid.Column="1" Grid.Row="3" Margin="160,111,36,-10" MinWidth="100" MaxLength="10" HorizontalAlignment="Center" PasswordChar="*" Width="184" VerticalAlignment="Top" FontSize="16" FontWeight="Bold" Height="32" />
+        <Button x:Name="btnLogin" Content="Log in" Grid.Row="3" HorizontalAlignment="Center" Grid.Column="1" Margin="365,75,-54,26" Click="btnLogin_Click" FontFamily="Times New Roman" FontSize="14" FontWeight="Bold" Background="Green" Height="32" Width="69" Foreground="White" >
+        </Button>
+        <Canvas x:Name="pnlLicence" Grid.ColumnSpan="2" Grid.RowSpan="4" Background="White">
+            
+            <Label Content="Naga"  FontSize="20" FontWeight="Bold"
+                    Foreground="Red"  Canvas.Top="160" Canvas.Left="414" RenderTransformOrigin="3.862,6.051" FontFamily="Perpetua"/>
+            <Label Content="Key"  Canvas.Top="236" Canvas.Left="358" Width="86" FontWeight="Bold" FontFamily="Perpetua" FontSize="16"/>
+            <Label Content="Licence"  Canvas.Top="283" Canvas.Left="358" FontWeight="Bold" FontFamily="Perpetua" FontSize="16"/>
+            <TextBox x:Name="lblMachineId" Canvas.Top="238" Canvas.Left="455" Width="142" FontWeight="Bold" FontFamily="Perpetua" FontSize="16" IsEnabled="False"/>
+            <TextBox x:Name="txtMacId" FontWeight="Bold" Canvas.Top="283" Canvas.Left="455" Width="142" FontFamily="Perpetua" FontSize="16" IsEnabled="False"/>
+            <TextBox x:Name="txtLicence" FontWeight="Bold" Canvas.Top="328" Canvas.Left="455" Width="142" FontFamily="Perpetua" FontSize="16"/>
+            <Button x:Name="btnLicence" Content="Licence" HorizontalAlignment="Center" Click="btnLicence_Click" FontFamily="Perpetua" FontSize="16" FontWeight="Bold" Background="#6E6E6E" Height="32" Width="69" Canvas.Left="528" Canvas.Top="374"/>
+        </Canvas>
+    </Grid>
+</Window>

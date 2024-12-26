@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<PriInfo>
+	<ResourceMap name="Syncfusion.SfPopupLayout.XForms.UWP" version="1.0" primary="true">
+		<Qualifiers/>
+		<ResourceMapSubtree name="Files">
+			<ResourceMapSubtree name="Syncfusion.SfPopupLayout.XForms.UWP">
+				<ResourceMapSubtree name="Resources">
+					<NamedResource name="popup_forms_dark_theme_close_icon.png" uri="ms-resource://Syncfusion.SfPopupLayout.XForms.UWP/Files/Syncfusion.SfPopupLayout.XForms.UWP/Resources/popup_forms_dark_theme_close_icon.png">
+						<Candidate type="Path">
+							<Value>Syncfusion.SfPopupLayout.XForms.UWP\Resources\popup_forms_dark_theme_close_icon.png</Value>
+						</Candidate>
+					</NamedResource>
+					<NamedResource name="popup_forms_light_theme_close_icon.png" uri="ms-resource://Syncfusion.SfPopupLayout.XForms.UWP/Files/Syncfusion.SfPopupLayout.XForms.UWP/Resources/popup_forms_light_theme_close_icon.png">
+						<Candidate type="Path">
+							<Value>Syncfusion.SfPopupLayout.XForms.UWP\Resources\popup_forms_light_theme_close_icon.png</Value>
+						</Candidate>
+					</NamedResource>
+					<NamedResource name="popup_forms_uwp_close_icon.png" uri="ms-resource://Syncfusion.SfPopupLayout.XForms.UWP/Files/Syncfusion.SfPopupLayout.XForms.UWP/Resources/popup_forms_uwp_close_icon.png">
+						<Candidate type="Path">
+							<Value>Syncfusion.SfPopupLayout.XForms.UWP\Resources\popup_forms_uwp_close_icon.png</Value>
+						</Candidate>
+					</NamedResource>
+				</ResourceMapSubtree>
+			</ResourceMapSubtree>
+		</ResourceMapSubtree>
+	</ResourceMap>
+</PriInfo>

@@ -1,0 +1,105 @@
+﻿<Window x:Class="Naga.Package"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+	 Title="Package" Width="1920" Height="700" WindowStartupLocation="CenterScreen" WindowState="Maximized" WindowStyle="None" xmlns:local="clr-namespace:Naga">
+    <Grid Width="Auto" Margin="0,0,0,0">
+        <Grid.Background>
+            <ImageBrush Stretch="Fill" ImageSource="Images/oyola.jpg"/>
+        </Grid.Background>
+        <Grid HorizontalAlignment="Center" VerticalAlignment="Stretch">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="1*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="100"/>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="3*"/>
+                <RowDefinition Height="3*"/>
+                <RowDefinition Height="3.2*"/>
+                <RowDefinition Height="3*"/>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="0.5*"/>
+                <RowDefinition Height="30"/>
+            </Grid.RowDefinitions>
+            <local:Header HorizontalAlignment="Stretch" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="8"  VerticalAlignment="Top"/>
+            <local:Footer HorizontalAlignment="Stretch" Grid.Column="0" Grid.Row="11" Grid.ColumnSpan="8"  VerticalAlignment="Bottom"/>
+
+            <Label x:Name="lblTitle" Content="Production" HorizontalAlignment="Center" FontFamily="Times New Roman" FontSize="20" FontWeight="Bold" Width="104" Grid.Column="2" Grid.ColumnSpan="2" Grid.Row="1"  Foreground="White" />
+            <Label x:Name="lblShift" Content="Shift :" HorizontalAlignment="Right" FontFamily="Times New Roman" FontSize="16" FontWeight="Bold" Width="130" Grid.Column="5" Background="#65B649" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Grid.Row="1"   Foreground="White" />
+            <Label x:Name="lblShiftDetails" HorizontalAlignment="Left" FontFamily="Times New Roman" FontSize="16" FontWeight="Bold" Width="170" Grid.Column="6" Background="#65B649" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"  Grid.Row="1"  Foreground="White" />
+            <Label x:Name="lblGrossWeight"  Content="Gross Wgt" HorizontalAlignment="Left" FontFamily="Times New Roman" FontSize="16" FontWeight="Bold" Width="86" Grid.Row="2" Grid.Column="6" VerticalAlignment="Center"  Foreground="White" />
+            <TextBox x:Name="txtGrossWeight"  IsEnabled="False" Background="White" Grid.Column="6" HorizontalAlignment="Right" Height="23" Grid.Row="2" TextWrapping="Wrap" VerticalAlignment="Center" Width="118" FontFamily="Times New Roman" FontSize="16" FontWeight="Bold"/>
+            <Border BorderBrush="Black" BorderThickness="2" Grid.ColumnSpan="4" Grid.RowSpan="2" Grid.Row="4" Grid.Column="1"  VerticalAlignment="Top" HorizontalAlignment="Center" Height="198" Width="619">
+                <ScrollViewer Grid.ColumnSpan="6" Grid.RowSpan="2" Grid.Row="4" Grid.Column="0"  VerticalScrollBarVisibility="Visible">
+                    <Grid Name="gdImage" ScrollViewer.VerticalScrollBarVisibility="Visible" ScrollViewer.CanContentScroll="True" Grid.Row="4" Grid.Column="0" 
+                         Width="619"  HorizontalAlignment="Center" VerticalAlignment="Top">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                    </Grid>
+                </ScrollViewer>
+            </Border>
+
+            <Button x:Name="btnStart" Content="Start" HorizontalAlignment="Left" VerticalAlignment="Top" Width="100"  FontFamily="Times New Roman" FontSize="16" FontWeight="Bold" Height="31" Click="btnStart_Click" Grid.Row="8" Grid.Column="2" Background="#65B649" >
+            </Button>
+            <Button x:Name="btnStop" Content="Stop" HorizontalAlignment="Left" VerticalAlignment="Top" Width="100"  FontFamily="Times New Roman" FontSize="16" FontWeight="Bold" Height="31" Click="btnStop_Click" Grid.Row="8" Grid.Column="3" Background="#65B649" >
+            </Button>
+            <Border BorderBrush="Black" BorderThickness="2"  Grid.Row="3" Grid.Column="5" Grid.RowSpan="4" Grid.ColumnSpan="2">
+                <DataGrid Name="gdvPackage" BorderThickness="1"  Grid.RowSpan="4" Grid.Column="5" Grid.Row="3" AutoGenerateColumns="False" ItemsSource="{Binding GdvItems}" 
+                          IsReadOnly="True" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" ColumnWidth="*" CanUserResizeRows="True" Margin="0,0,0,0">
+                    <DataGrid.ColumnHeaderStyle>
+                        <Style TargetType="DataGridColumnHeader">
+                            <Setter Property="FontSize" Value="14"/>
+                            <Setter Property="FontWeight" Value="Bold"/>
+                        </Style>
+                    </DataGrid.ColumnHeaderStyle>
+                    <DataGrid.RowStyle>
+                        <Style TargetType="DataGridRow">
+                            <Setter Property="FontSize" Value="12"/>
+                            <Setter Property="FontFamily" Value="TimesNewRoman"/>
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding ItemName}" Value="">
+                                    <Setter Property="Background" Value="Yellow"></Setter>
+                                    <Setter Property="FontSize" Value="13"/>
+                                    <Setter Property="FontWeight" Value="Bold"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </DataGrid.RowStyle>
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Binding="{Binding Path=ItemName}" Header="Item Name" Width="200" IsReadOnly="True" />
+                        <DataGridTextColumn Binding="{Binding Path=BatchNo}" Header="Batch No" Width="120" IsReadOnly="True" />
+                        <DataGridTextColumn Binding="{Binding Path=PdnCnt}" Header="Count" Width="80" IsReadOnly="True" />
+                    </DataGrid.Columns>
+                </DataGrid>
+            </Border>
+
+            <Label x:Name="lblTotal" Content="Total Count" HorizontalAlignment="Center" FontFamily="Times New Roman" FontSize="16" FontWeight="Bold" Width="96" Grid.Row="7" Grid.Column="5" VerticalAlignment="Center"  Foreground="White" />
+            <TextBox x:Name="txtTotal"  IsEnabled="False" Background="White" Grid.Column="6" HorizontalAlignment="Left" Height="23" Grid.Row="7" TextWrapping="Wrap" VerticalAlignment="Center" Width="123" FontFamily="Times New Roman" FontSize="16" FontWeight="Bold"/>
+
+
+            <Label x:Name="lblWeight" Content="Weight" HorizontalAlignment="Right" FontFamily="Times New Roman" FontSize="16" FontWeight="Bold" Width="86" Grid.Row="8" Grid.Column="4" Foreground="White" />
+            <Label x:Name="lblQty" Content="Count" HorizontalAlignment="Right" FontFamily="Times New Roman" FontSize="16" FontWeight="Bold" Width="86" Grid.Row="9" Grid.Column="4"  Foreground="White" />
+            <TextBox x:Name="txtWeight" IsEnabled="False" Background="White" Grid.Column="5" HorizontalAlignment="Left" Height="28" Grid.Row="8" TextWrapping="Wrap" VerticalAlignment="Top" Width="174" FontFamily="Times New Roman" FontSize="16" FontWeight="Bold"/>
+            <TextBox x:Name="txtQuantity" IsEnabled="False" Background="White" Grid.Column="5" HorizontalAlignment="Left" Height="28" Grid.Row="9" TextWrapping="Wrap" VerticalAlignment="Top" Width="174" FontFamily="Times New Roman" FontSize="16" FontWeight="Bold"/>
+            <Button x:Name="btnEnter" Content="Enter" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75"  FontFamily="Times New Roman" FontSize="16" FontWeight="Bold" Height="31" Click="btnEnter_Click" Grid.Row="8" Grid.Column="6" Background="#65B649" >
+            </Button>
+            <Label x:Name="lblMsg" HorizontalAlignment="Center" FontFamily="Times New Roman" FontSize="18" FontWeight="Bold"  Grid.Row="9" Foreground="Red" Width="560" Grid.ColumnSpan="4" Grid.RowSpan="2" />
+            <Button x:Name="btnReprint" Content="Re Print" HorizontalAlignment="Left" VerticalAlignment="Top" Width="106"  FontFamily="Times New Roman" FontSize="16" FontWeight="Bold" Height="31" Click="btnReprint_Click" Grid.Row="8" Background="DarkCyan" Grid.Column="1"  Foreground="White"  />
+        </Grid>
+    </Grid>
+</Window>

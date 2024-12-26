@@ -1,0 +1,46 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="SalesReturn.FrmServerSettings" NavigationPage.HasBackButton="False" 
+             NavigationPage.HasNavigationBar="False">
+    <ContentPage.Content>
+        <StackLayout VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" BackgroundColor="White">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="50"></RowDefinition>
+                    <RowDefinition Height="*"></RowDefinition>
+                    <RowDefinition Height="50"></RowDefinition>
+                </Grid.RowDefinitions>
+                <StackLayout VerticalOptions="StartAndExpand" HorizontalOptions="FillAndExpand" Grid.Column="0" Grid.Row="0"  Padding="0,5" BackgroundColor="#0060AD">
+                    <Label Text="Server Settings" VerticalTextAlignment="Center" HorizontalTextAlignment="Center" FontSize="20" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand" 
+                       FontAttributes="Bold" TextColor="White"></Label>
+                </StackLayout>
+                <StackLayout VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" Grid.Column="0" Grid.Row="1" Padding="20,20,20,20">
+                    <ScrollView>
+                        <Grid RowSpacing="0" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="25"></RowDefinition>
+                                <RowDefinition Height="40"></RowDefinition>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <Label Text="Server URL" TextColor="Black" Grid.Row="0" Grid.Column="0" FontAttributes="Bold" FontSize="18" VerticalTextAlignment="Center"></Label>
+                            <Frame Grid.Row="1" Grid.Column="0"  Padding="0,-7" BorderColor="Black">
+                                <Entry x:Name="txtServer"   HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" TextColor="Black"
+                                           Text="" Placeholder="http://" />
+                            </Frame>
+                        </Grid>
+                    </ScrollView>
+                </StackLayout>
+                <StackLayout VerticalOptions="EndAndExpand" Grid.Column="0" Grid.Row="2" Padding="0,0">
+                    <Button x:Name="btnSrvStgSave" Image="AppImage/save.png" Clicked="btnSrvStgSave_Clicked" BackgroundColor="Transparent" 
+                        VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand"></Button>
+                </StackLayout>
+            </Grid>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

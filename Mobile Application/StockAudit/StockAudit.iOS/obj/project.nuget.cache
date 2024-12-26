@@ -1,0 +1,12 @@
+{
+  "version": 2,
+  "dgSpecHash": "yEOk/Wi2bzk6YmRY6D57RDTyUmVs1tloDsaVl/GEjhdYyGA677GHAEhOaqAJHzlbiCxZD3BMMHTx7cuMKAheQg==",
+  "success": true,
+  "projectFilePath": "D:\\Xamarin\\Live Projects\\Naga\\StockAudit\\StockAudit.iOS\\StockAudit.iOS.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\Niraltek 2\\.nuget\\packages\\system.numerics.vectors\\4.5.0\\system.numerics.vectors.4.5.0.nupkg.sha512",
+    "C:\\Users\\Niraltek 2\\.nuget\\packages\\xamarin.essentials\\1.7.0\\xamarin.essentials.1.7.0.nupkg.sha512",
+    "C:\\Users\\Niraltek 2\\.nuget\\packages\\xamarin.forms\\5.0.0.2196\\xamarin.forms.5.0.0.2196.nupkg.sha512"
+  ],
+  "logs": []
+}

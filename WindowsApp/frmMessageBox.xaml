@@ -1,0 +1,21 @@
+﻿<Page x:Class="Naga.frmMessageBox"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      mc:Ignorable="d" 
+      d:DesignHeight="300" d:DesignWidth="400"
+	Title="MessageBox">
+
+    <Grid Background="LightGreen">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30*">
+            </RowDefinition>
+        </Grid.RowDefinitions>
+        <Label Content="Label Printed.... Place Another Bag..." HorizontalAlignment="Left" Margin="74,121,0,0" VerticalAlignment="Top" FontFamily="Times New Roman" FontSize="16" FontWeight="Bold" Background="White" Foreground="#FFF70D0D"/>
+        <Button Content="OK" HorizontalAlignment="Left" Margin="267,233,0,0" VerticalAlignment="Top" Width="98" Height="29" FontFamily="Times New Roman" FontSize="14" FontWeight="Bold"/>
+    </Grid>
+</Page>

@@ -1,0 +1,1 @@
+D:\Xamarin\Live Projects\Naga\StockAudit\StockAudit.UWP\StockAudit.UWP.csproj;x86

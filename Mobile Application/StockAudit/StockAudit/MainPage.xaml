@@ -1,0 +1,109 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:combobox="clr-namespace:Syncfusion.XForms.ComboBox;assembly=Syncfusion.SfComboBox.XForms" 
+             xmlns:syncfusion="clr-namespace:Syncfusion.SfDataGrid.XForms;assembly=Syncfusion.SfDataGrid.XForms" 
+             xmlns:sfPopup="clr-namespace:Syncfusion.XForms.PopupLayout;assembly=Syncfusion.SfPopupLayout.XForms"
+             xmlns:local="clr-namespace:StockAudit" NavigationPage.HasNavigationBar="False" NavigationPage.HasBackButton="False"
+             x:Class="StockAudit.MainPage">
+
+    <ContentPage.Content>
+        <AbsoluteLayout VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
+            <StackLayout x:Name="lytprocess" Padding="0,0" Spacing="0" AbsoluteLayout.LayoutBounds="0, 0, 1, 1" AbsoluteLayout.LayoutFlags="All">
+                <Grid VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" Padding="10,10" RowSpacing="6">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="20"></RowDefinition>
+                        <RowDefinition Height="*"></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <Label Text="STOCK AUDIT" Grid.Row="0" TextColor="Black" VerticalOptions="Center" HorizontalOptions="Center" Grid.Column="0" FontAttributes="Bold" FontSize="16"></Label>
+                    <StackLayout VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" Padding="0,10" Grid.Column="0" Grid.Row="1">
+                        <Grid Padding="0,0" RowSpacing="10" ColumnSpacing="0" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="0.6*"></ColumnDefinition>
+                                <ColumnDefinition Width="0.1*"></ColumnDefinition>
+                                <ColumnDefinition Width="*"></ColumnDefinition>
+                                <ColumnDefinition Width="0.5*"></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="0.5*"></RowDefinition>
+                                <RowDefinition Height="0.5*"></RowDefinition>
+                                <RowDefinition Height="0.5*"></RowDefinition>
+                                <RowDefinition Height="0.5*"></RowDefinition>
+                                <RowDefinition Height="0.5*"></RowDefinition>
+                                <RowDefinition Height="0.3*"></RowDefinition>
+                                <RowDefinition Height="0.8*"></RowDefinition>
+                                <RowDefinition Height="0.6*"></RowDefinition>
+                            </Grid.RowDefinitions>
+
+                            <Label Text="Select WareHouse" FontAttributes="Bold" Grid.Column="0" Grid.Row="0"   TextColor="Black" VerticalTextAlignment="Center"></Label>
+                            <Label Text=":" FontAttributes="Bold" Grid.Column="1" Grid.Row="0" TextColor="Black" VerticalTextAlignment="Center"></Label>
+                            <Frame OutlineColor="#0060AD" BackgroundColor="Transparent" Grid.Row="0" Grid.Column="2" Grid.ColumnSpan="2"  Padding="0,-2">
+                                <combobox:SfComboBox x:Name="ddlWarehouse" TextColor="Black" DataSource="{Binding data}" Watermark="       -- Select --" 
+                                                         FontAttributes="Bold" DropDownItemFontAttributes="Bold" FontFamily="Calibri" 
+                                                     SelectionChanged="ddlWarehouse_SelectionChanged" IsEditableMode="False" 
+                                                     DisplayMemberPath="PlantName" SelectedValuePath="PlantId" />
+                            </Frame>
+                            <Button x:Name="btnScan" Text="START SCAN"  Clicked="btnScan_Clicked" Grid.Column="0" Grid.ColumnSpan="4" Grid.Row="1" 
+                                    BackgroundColor="#0060AD" TextColor="White" FontFamily="Calibri" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand" FontAttributes="Bold" ></Button>
+                            
+                            <Label Text="Location" FontAttributes="Bold" Grid.Column="0" Grid.Row="2" TextColor="Black" VerticalTextAlignment="Center"></Label>
+                            <Label Text=":" FontAttributes="Bold" Grid.Column="1" Grid.Row="2" TextColor="Black" VerticalTextAlignment="Center"></Label>
+                            <Frame Grid.Row="2" Grid.Column="2"  Grid.ColumnSpan="2" OutlineColor="#0060AD" BackgroundColor="Transparent" Padding="0,-4" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
+                                <local:ScanEntryControl x:Name="txtRackBarcode" Text="" FontAttributes="Bold" TextColor="Black" Placeholder="Location or Rack"  Completed="txtRackBarcode_Completed" 
+                                                         IsEnabled="False"></local:ScanEntryControl>
+                            </Frame>
+
+                            <Label Text="Crate Barcode" FontAttributes="Bold" Grid.Column="0" Grid.Row="3" TextColor="Black" VerticalTextAlignment="Center"></Label>
+                            <Label Text=":" FontAttributes="Bold" Grid.Column="1" Grid.Row="3" TextColor="Black" VerticalTextAlignment="Center"></Label>
+                            <Frame Grid.Row="3" Grid.Column="2" OutlineColor="#0060AD" BackgroundColor="Transparent" Padding="0,-4" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
+                                <local:CrateEntryControl x:Name="txtCrateBarcode" Text="" FontAttributes="Bold" TextColor="Black" Placeholder="Crate Barcode"  Completed="txtCrateBarcode_Completed" 
+                                                         IsEnabled="False"></local:CrateEntryControl>
+                            </Frame>
+                            <Button x:Name="btnNextCrate" Text="Next Crate"  Clicked="btnNextCrate_Clicked" Grid.Column="3" Grid.Row="3" 
+                                    BackgroundColor="#0060AD" IsEnabled="false" TextColor="White" FontFamily="Calibri" FontAttributes="Bold" FontSize="12" Padding="0,0" ></Button>
+
+                            <Label Text="Material Barcode" FontAttributes="Bold" Grid.Column="0" Grid.Row="4" TextColor="Black" VerticalTextAlignment="Center"></Label>
+                            <Label Text=":" FontAttributes="Bold" Grid.Column="1" Grid.Row="4" TextColor="Black" VerticalTextAlignment="Center"></Label>
+                            <Frame OutlineColor="#0060AD" BackgroundColor="Transparent" Grid.Row="4" Grid.ColumnSpan="2"  Grid.Column="2" Padding="0,0">
+                                <local:SecondaryEntryControl x:Name="txtMaterialBarcode" Text="" FontAttributes="Bold" TextColor="Black" Placeholder="Secondary Barcode"  Completed="txtMaterialBarcode_Completed" 
+                                                         IsEnabled="False"></local:SecondaryEntryControl>
+                            </Frame>
+                            <Label x:Name="lblError" Text="" Grid.Column="0" Grid.Row="5" Grid.ColumnSpan="4" TextColor="Red" VerticalTextAlignment="Center"
+                                   HorizontalTextAlignment="Center"></Label>
+                            <StackLayout Orientation="Horizontal"  Grid.Column="0" Grid.ColumnSpan="4" Grid.Row="7" Spacing="10" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand">
+                                <Button x:Name="btnView" CornerRadius="12" Text="View" VerticalOptions="Center" HorizontalOptions="Start"  Clicked="btnView_Clicked"
+                                        BackgroundColor="#0060AD" TextColor="White" FontFamily="Calibri" FontAttributes="Bold" ></Button>
+                                <Button x:Name="btnSave" CornerRadius="12" Text="Save" VerticalOptions="Center" HorizontalOptions="Center"  Clicked="btnSave_Clicked"
+                                        BackgroundColor="Green" TextColor="White" FontFamily="Calibri" FontAttributes="Bold" ></Button>
+                                <Button x:Name="btnExit" CornerRadius="12" Text="App Exit" VerticalOptions="Center" HorizontalOptions="Center"  Clicked="btnExit_Clicked" 
+                                    BackgroundColor="Red" TextColor="White" FontFamily="Calibri" FontAttributes="Bold" ></Button>
+                            </StackLayout>
+                            
+                        </Grid>
+                    </StackLayout>
+                </Grid>
+            </StackLayout>
+            <StackLayout x:Name="StkActIndicator" IsVisible="False" AbsoluteLayout.LayoutBounds="0,0,1,1"  
+                        AbsoluteLayout.LayoutFlags="All" BackgroundColor="#66000000" 
+                     VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
+                <StackLayout VerticalOptions="CenterAndExpand" WidthRequest="500"  HorizontalOptions="Center" BackgroundColor="White"  Padding="20,20,20,20">
+                    <Grid VerticalOptions="FillAndExpand">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="100"></ColumnDefinition>
+                            <ColumnDefinition Width="*"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"></RowDefinition>
+                            <RowDefinition Height="*"></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <Label x:Name="txtTitle" Text="Please Wait" FontAttributes="Bold" FontSize="Medium" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"></Label>
+                        <ActivityIndicator x:Name="actIndi" IsRunning="True" IsVisible="True" Color="Blue" Grid.Row="1" Grid.Column="0"></ActivityIndicator>
+                        <Label x:Name="lblMessage" Text="Loading ...." VerticalOptions="CenterAndExpand" HorizontalOptions="StartAndExpand" 
+                               VerticalTextAlignment="Center" HorizontalTextAlignment="Center"  Grid.Row="1" Grid.Column="1"></Label>
+                    </Grid>
+                </StackLayout>
+            </StackLayout>
+        </AbsoluteLayout>
+    </ContentPage.Content>
+
+</ContentPage>

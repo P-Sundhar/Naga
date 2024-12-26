@@ -1,0 +1,9 @@
+﻿<Window x:Class="Naga.MsgErr"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="MsgErr" Height="250" Width="450" WindowStartupLocation="CenterScreen" WindowStyle="None"  >
+    <Grid Background="DarkRed">
+        <Label x:Name="lblone" Content="Replace Another Bag..." HorizontalAlignment="Left" Foreground="Yellow" FontStyle="Normal" FontFamily="Arial" FontSize="25" FontWeight="Bold" Margin="107,91,0,0" VerticalAlignment="Top"/>
+        <Button x:Name="btnOk" Content="OK"  FontSize="20" HorizontalAlignment="Left" Margin="320,178,0,0" VerticalAlignment="Top" Width="98" Height="36" Background="#6E6E6E" FontWeight="Bold" Click="btnOk_Click"/>
+    </Grid>
+</Window>

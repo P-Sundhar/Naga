@@ -1,0 +1,445 @@
+/* ================Common CSS Starts================ */
+body {
+    font-family: 'Poppins';
+}
+
+.e-tools {
+    display: flex;
+    margin-right: -15px;
+    margin-left: -15px;
+    flex-direction: row;
+    align-items: flex-start;
+}
+.Export-Tools button {
+    margin-left: 8px;
+    color: white;
+    background-color:#2262c6;
+    border-radius: 32px;
+    transition: 0.5s;
+    box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px 0px, rgba(0, 0, 0, 0.23) 0px 6px 6px 0px;
+}
+
+.Export-Tools {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+.Export-Tools .dt-buttons i {
+    margin-right: 8px;
+}
+
+.Export-Tools .buttons-copy:hover {
+    background-color: #6B757E;
+    color: white;
+    transition: 0.5s;
+}
+.Export-Tools .buttons-excel:hover {
+    background-color: #178755;
+    color: white;
+    transition: 0.5s;
+}
+.Export-Tools .buttons-pdf:hover {
+    background-color: #DD3447;
+    color: white;
+    transition: 0.5s;
+}
+.Export-Tools .buttons-print:hover {
+    background-color: #13C8EB;
+    color: white;
+    transition: 0.5s;
+}
+.Export-Tools .buttons-csv:hover {
+    background-color: #FFC006;
+    color: white;
+    transition: 0.5s;
+}
+
+.add-s .dropdown button {
+    width: 125px;
+    color: white;
+    background-color: #2262c6;
+    border-radius: 32px;
+    box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px 0px, rgba(0, 0, 0, 0.23) 0px 6px 6px 0px;
+}
+
+.add-s .dropdown button:hover {
+    background-color: #0CCAF3;
+    color: black;
+    box-shadow: none;
+}
+
+#headingOne1 section button {
+    width: 200px;
+    color: white;
+    background-color: #2262c6;
+    border-radius: 32px;
+    border-color: #2262c6;
+    box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px 0px, rgba(0, 0, 0, 0.23) 0px 6px 6px 0px;
+}
+
+#headingOne1 section button:hover {
+    background-color: #0CCAF3;
+    color: black;
+    box-shadow: none;
+    border-color: #0CCAF3;
+}
+#headingOne1 section i {
+    margin-right: 8px;
+}
+
+.modal .row {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content:center;
+}
+.add-s {
+    margin-top: 3px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
+.dropdown-menu {
+    background-color: whitesmoke;
+    /*max-height: 200px;
+    overflow-y: scroll;*/
+    max-width: 100px;
+}
+.dropdown-menu .form-check label {
+    color: black;
+}
+.form-check-input:checked {
+    background-color: #0d6efd;
+    border-color: #0d6efd;
+}
+.table {
+    text-align: center;
+}
+.action {
+    height: 40px;
+    gap: 10px;
+    display: flex;
+    flex-direction: row;
+}
+.action i {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    border-radius: 30px;
+}
+
+/* ================Common CSS Ends================ */
+/* -----------------Supplier Master----------------- */
+
+
+
+/* -----------------Category Master----------------- */
+
+
+
+/* -----------------Unit Master----------------- */
+
+
+.dots-two {
+    display: block;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    height: 50px;
+    width: 50px;
+    margin: -25px 0 0 -25px;
+}
+#spinners {
+    display: block;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    height: 50px;
+    width: 50px;
+    margin: -25px 0 0 -25px;
+}
+
+/* -----------------Customer Master----------------- */
+
+
+
+ 
+/* -----------------Product Master----------------- */
+
+.modal-body {
+    background-color: whitesmoke;
+}
+.thumbnail input {
+    cursor: pointer;
+}
+.dataTables_wrapper .row {
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+}
+.Export-Tools button {
+    width: 125px;
+    height: 36px;
+}
+.modal-footer .save-button {
+    background-color: #178755;
+    color: white;
+}
+
+.modal .form-group label {
+    color: black;
+}
+
+.form-group .dropdown button {
+    width: 110px;
+    height: 40px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+.modal-footer button {
+    box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px 0px, rgba(0, 0, 0, 0.23) 0px 6px 6px 0px;
+    border-radius: 30px;
+}
+
+/* -----------------Organization Master----------------- */
+
+
+.card-header {
+    background-color: white!important;
+}
+
+.card-footer {
+    background-color: white!important;
+}
+.form-group label {
+    color: black!important;
+}
+.card-footer button {
+    border-radius: 30px;
+    float: right;
+    margin-left: 18px;
+}
+.card-footer button:hover {
+   color: white;
+}
+
+/* ===============================Report Page CSS=============================== */
+/* ================Reports Pge Common CSS Starts================ */
+body {
+    font-family: 'Poppins', 'sans-serif';
+}
+
+.switch-container {
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+    align-items: stretch;   
+}
+
+.visibility button {
+    border-radius: 30px;
+}
+
+
+
+.dropdown-menu .form-check label {
+    color: black;
+}
+.form-check-input:checked {
+    background-color: #0d6efd;
+    border-color: #0d6efd;
+}
+
+.action {
+    height: 40px;
+    gap: 10px;
+    display: flex;
+    flex-direction: row;    
+}
+.action i {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    border-radius: 30px;
+}
+
+.form .bootstrap-select:not([class*=col-]):not([class*=form-control]):not(.input-group-btn) {
+    width: 348px;
+}
+.supplier-input-lane2 {
+    display: flex;
+    flex-direction: row;
+}
+
+.supplier-input-lane2 .route {
+    display: flex;
+    flex-direction: column;
+}
+.report-content {
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
+    transition: 1s;
+}
+.report-content:hover {
+    transition: 1s;
+    box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px 0px, rgba(0, 0, 0, 0.23) 0px 6px 6px 0px;
+}
+.visibility button {
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
+    transition: 0.8s;
+}
+.visibility button:hover {
+    box-shadow: none;
+    transition: 0.8s;
+}
+.filt {
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
+    transition: 0.8s;
+}
+.filt:hover {
+    box-shadow: none;
+    transition: 0.8s;
+}
+
+
+.multiCollapseReport {
+    height: 200px;
+    overflow-y: auto;
+}
+
+/* Scrollbar Style (scrollX) */
+div.dataTables_wrapper {
+    overflow-x: scroll;
+    width: 100%;
+    margin: 0 auto;
+}
+
+.unit-modal .dropdown button {
+    padding-top: 5px;
+    background-color: white;
+    width: 100%;
+    justify-content: center;
+    box-shadow: none;
+    border-width: 1px;
+    border-color: rgb(183, 183, 183);
+    border-radius: 5px;
+    height: 44px;
+}
+
+.systemuser-modal .dropdown button {
+    padding-top: 5px;
+    background-color: white;
+    width: 100%;
+    justify-content: center;
+    box-shadow: none;
+    border-width: 1px;
+    border-color: rgb(183, 183, 183);
+    border-radius: 5px;
+    height: 44px;
+}
+
+.ex-im {
+    display: flex;
+}
+
+.shiftdet-input-lane6 .dayclose {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.shiftdet-input-lane6 .dayclose button {
+    width: 150px;
+}
+.form-group .dmy {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.assign-input-lane5 .dropdown button {
+    padding-top: 5px;
+    background-color: white;
+    width: 100%;
+    justify-content: center;
+    box-shadow: none;
+    border-width: 1px;
+    border-color: rgb(183, 183, 183);
+    border-radius: 5px;
+    height: 44px;
+}
+
+.assign-input-lane10 .dayclose {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+.headpart {
+    display: flex;
+    justify-content: space-between;
+}
+/*.dataTables_wrapper .row {
+    display:flex;
+    flex-wrap:nowrap;
+    align-items:baseline;
+    overflow-y:auto;
+}*/
+.rej-foot {
+    justify-content:center;
+}
+
+.file-upload-barcode {
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+}
+
+    .file-upload-barcode input, .file-upload-barcode button {
+        width: 80%;
+    }
+
+.barcode-download {
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    width:80%;
+}
+
+/*Color Legends*/
+dl dt {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    vertical-align: middle;
+}
+
+dl dd {
+    display: inline-block;
+    margin: 0px 10px;
+    padding-bottom: 0;
+    vertical-align: middle;
+}
+
+dl dt.red {
+    background: #fc5d63;
+}
+
+dl dt.yellow {
+    background: #fae3a2;
+}
+dl dt.green {
+    background: #a5faa9;
+}
+dl dt.blue {
+    background: #a6b6f7;
+}

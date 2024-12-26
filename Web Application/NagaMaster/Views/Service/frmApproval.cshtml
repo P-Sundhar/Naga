@@ -1,0 +1,308 @@
+﻿@model NagaMaster.Models.Service.ApprovalModel
+<div class="header-container fixed-top">
+    <header class="header navbar navbar-expand-sm">
+        <ul class="navbar-item flex-row">
+            <div class="sub-header-container">
+                <header class="header navbar navbar-expand-sm">
+                    <a href="javascript:void(0);" class="sidebarCollapse" data-placement="bottom">
+                        <i class="las la-bars"></i>
+                    </a>
+                    <ul class="navbar-nav flex-row">
+                        <li>
+                            <div class="page-header">
+                                <nav class="breadcrumb-one" aria-label="breadcrumb">
+                                    <ol class="breadcrumb">
+                                        <li class="breadcrumb-item active"><a href="javascript:void(0);">Services</a></li>
+                                    </ol>
+                                </nav>
+                            </div>
+                        </li>
+                    </ul>
+                </header>
+            </div>
+            <li class="heading-nav nav-item dropdown fullscreen-dropdown d-none d-lg-flex">
+                @*PlantName :*@ @Request.Cookies["PlantName"].Value.ToString()
+            </li>
+        </ul>
+        <ul class="navbar-item flex-row ml-md-auto">
+            <li class="nav-item dropdown fullscreen-dropdown d-none d-lg-flex">
+                <a class="nav-link full-screen-mode d-flex align-center" href="javascript:void(0);">
+                    <i class="las la-compress pr-2" id="fullScreenIcon"></i>Full Display
+                </a>
+            </li>
+            <li class="nav-item dropdown notification-dropdown">
+                <a href="javascript:void(0);" class="nav-link dropdown-toggle position-relative" id="notificationDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <i class="las la-bell"></i>
+                    <div class="blink">
+                        <div class="circle"></div>
+                    </div>
+                </a>
+                <div class="dropdown-menu position-absolute" aria-labelledby="notificationDropdown">
+                    <div class="nav-drop is-notification-dropdown">
+
+                    </div>
+                </div>
+            </li>
+            <li class="nav-item dropdown user-profile-dropdown d-flex align-items-center pr-4">
+                <a href="javascript:void(0);" class="nav-link dropdown-toggle user" id="userProfileDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                    <div class="d-flex flex-column text-right">
+                        <span class="font-12 strong lh-normal">Welcome! @Request.Cookies["EmpDesc"].Value.ToString()</span>
+                        <span class="font-11 lighter lh-normal">@Request.Cookies["RoleName"].Value.ToString()</span>
+                    </div>
+                    <img src="~/assets/img/new-pizza.jpg" alt="avatar">
+                </a>
+                <div class="dropdown-menu position-absolute" aria-labelledby="userProfileDropdown">
+                    <div class="nav-drop is-account-dropdown">
+                        <div class="inner">
+                            <div class="nav-drop-body account-items p-0">
+                                <a id="profile-link" class="account-item" href="pages_profile.html">
+                                    <div class="media align-center">
+                                        <div class="media-left">
+                                            <div class="image">
+                                                <img class="rounded-circle avatar-xs" src="~/assets/img/new-pizza.jpg" alt="">
+                                            </div>
+                                        </div>
+                                        <div class="media-content ml-3">
+                                            <h6 class="font-13 mb-0 strong">@Request.Cookies["EmpDesc"].Value.ToString()</h6>
+                                            <small>@Request.Cookies["RoleName"].Value.ToString()</small>
+                                        </div>
+                                        <div class="media-right">
+                                            <i data-feather="check"></i>
+                                        </div>
+                                    </div>
+                                </a>
+                                <a class="account-item" href="pages_profile.html">
+                                    <div class="media align-center">
+                                        <div class="icon-wrap">
+                                            <i class="las la-user font-20"></i>
+                                        </div>
+                                        <div class="media-content ml-3">
+                                            <h6 class="font-13 mb-0 strong">My Account</h6>
+                                        </div>
+                                    </div>
+                                </a>
+                                <a class="account-item" href="pages_timeline.html">
+                                    <div class="media align-center">
+                                        <div class="icon-wrap">
+                                            <i class="las la-briefcase font-20"></i>
+                                        </div>
+                                        <div class="media-content ml-3">
+                                            <h6 class="font-13 mb-0 strong">My Activity</h6>
+                                        </div>
+                                    </div>
+                                </a>
+                                <a class="account-item settings">
+                                    <div class="media align-center">
+                                        <div class="icon-wrap">
+                                            <i class="las la-cog font-20"></i>
+                                        </div>
+                                        <div class="media-content ml-3">
+                                            <h6 class="font-13 mb-0 strong">Settings</h6>
+                                        </div>
+                                    </div>
+                                </a>
+                                <hr class="account-divider">
+                                <a class="account-item" href="~/Login/LoginPage">
+                                    <div class="media align-center">
+                                        <div class="icon-wrap">
+                                            <i class="las la-sign-out-alt font-20"></i>
+                                        </div>
+                                        <div class="media-content ml-3">
+                                            <h6 class="font-13 mb-0 strong ">Logout</h6>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </header>
+</div>
+<!-- Main Body Starts -->
+<div class="">
+    <div class="row layout-top-spacing">
+        <div class="col-xl-12 col-lg-12 col-sm-12  layout-spacing">
+            <div class="widget-content widget-content-area br-6" style="background: whitesmoke;">
+                <form id="frmApprovaldetails">
+                    <div class="row mb-2">
+                        <div class="col-sm-12">
+                            <h4 class="pl-2 pt-2">Shipment /PO Approval</h4>
+                        </div>
+                    </div>
+                    <div class="assign-input-lane2 row">
+                        <div class="form-group col-sm-3">
+                            <label class="col-form-label">Plant</label>
+                            <div class="">
+                                @Html.DropDownListFor(x => x.PlantCode, new SelectList(Model.PlantDetails, "Value", "Text"), "--- SELECT ---", new { @class = "form-control", name = "PlantCode", onchange = "LoadShipment()" })
+                            </div>
+                        </div>
+                        <div class="form-group col-sm-3">
+                            <label class="col-form-label">
+                                Purchase / Shipment Number
+                            </label>
+                            <div class="">
+                                @Html.DropDownListFor(x => x.Shipment, new SelectList(Model.SipmentDetails, "Value", "Text"), "--- SELECT ---", new { @class = "form-control", name = "Shipment", onchange = "cleargrd()" })
+                            </div>
+                        </div>
+                        <div class="form-group col-sm-6">
+                            <label class="col-form-label"></label>
+                            <div class="">
+                                <input class="btn btn-success" style="align-items: center; margin-top: 15px" value="Submit" type="button" onclick="LoadGrid()" />
+                                <input class="btn btn-danger" onclick="funclear()" style="align-items: center; margin-top: 15px" value="Clear" type="button" />
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="table-responsive mb-4">
+    <table id="tblApproval" class="table table-hover item-mast " role="grid" style="width:100%">
+    </table>
+    
+</div>
+<div class="assign-input-lane10 row">
+    <div class="form-group col-sm-12 dayclose">
+        <input class="btn btn-success" style="align-items: center;" value="Approve" type="button" onclick="@(ViewBag.IsEdit ==0 ? "ResError()" : "funApprove()")" />
+    </div>
+</div>
+    <!-- Main Body Ends -->
+
+    <script>
+        function ResError() {
+            toastr.error("You are not eligible To Approve");
+        }
+
+        function funApprove() {
+
+            var rowCount = $('#tblApproval tr').length;
+            if (rowCount == 0)
+            {
+                toastr.error("No Data To Approve");
+                return false;
+            }
+
+            if (confirm("Are you sure to Approve ?")) {
+                $.ajax({
+                    type: "POST",
+                    url: "/Service/Approve",
+                    contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+                    dataType: "json",
+                    data: $("#frmApprovaldetails").serialize(),
+                    success: function (jsonData) {
+                        if (jsonData.Success == 1) {
+                            toastr.success(jsonData.Message);
+                            setTimeout(function () { location.reload(); }, 2000);
+                        }
+                        else {
+                            toastr.success(jsonData.Message);
+                        }
+                    }
+                });
+            }
+            return false;
+
+        }
+
+        function cleargrd() {
+            $("#tblApproval").html("");
+        }
+
+        function funclear() {
+            $("#Shipment").val("");
+            $("#PlantCode").val("");
+            $("#tblApproval").html("");
+        }
+
+        function LoadGrid() {
+            if ($("#Shipment").val() == "") {
+                toastr.error("Select Shipment Number");
+                return true;
+            }
+            var dataset = new Array();
+            $.ajax({
+                type: "POST",
+                url: "/Service/GetShipmentApproval",
+                contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+                dataType: "json",
+                data: $("#frmApprovaldetails").serialize(),
+                success: function (response) {
+                    var jsonData = response.Data;
+                    console.log(jsonData);
+                    if (response != null) {
+                        len = jsonData.length;
+
+                        if ($.fn.DataTable.fnIsDataTable("#tblApproval"))
+                            $("#tblApproval").dataTable().fnDestroy();
+
+                        for (i = 0; i < len; i++)
+                            dataset.push([(i + 1), jsonData[i].DeliveryNo, jsonData[i].Outlet, jsonData[i].MaterialCode, jsonData[i].MaterialDesc,
+                                jsonData[i].BatchNo, jsonData[i].AvailableQty, jsonData[i].ProposedQty, jsonData[i].PickedQty, jsonData[i].DifferenceQty])
+
+
+                        $('#tblApproval').DataTable({
+                            "autoWidth": true,
+                            "deferRender": false,
+                            "sScrollY": "400px",
+                            "sScrollX": "100%",
+
+
+
+                            "language": {
+                                "paginate": {
+                                    "previous": "<i class='las la-angle-left'></i>",
+                                    "next": "<i class='las la-angle-right'></i>"
+                                }
+                            },
+                            data: dataset,
+                            columns: [{ title: "#", width: "2%" }, { title: "DELIVERY NUMBER" }, { title: "OUTLET" }, { title: "MATERIAL CODE" },
+                                { title: "MATERIAL NAME" }, { title: "BATCH NUMBER" }, { title: "AVAILABLE QTY" }, { title: "PROPOSED QTY" },
+                            { title: "PICKED QTY" }, { title: "DIFFERENCE" }]
+                        });
+
+                    } else {
+                        alert("something went wrong");
+                    }
+                }
+            });
+        }
+
+
+        function LoadShipment() {
+
+            if ($.fn.DataTable.fnIsDataTable("#tblApproval"))
+                $("#tblApproval").dataTable().fnDestroy();
+
+            $.ajax({
+                type: "POST",
+                url: "/Service/GetPurchaseShipmentDetails",
+                contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+                dataType: "json",
+                data: $("#frmApprovaldetails").serialize(),
+                success: function (jsonData) {
+                    if (jsonData != null) {
+                        if (jsonData.Success == 1) {
+                            $("#Shipment").empty();
+                            var lankanListArray = jsonData.Data;
+
+                            $("#Shipment").append($("<option></option>").val("").html("--Select--"));
+                            // running a loop
+                            $.each(lankanListArray, function () {
+                                $("#Shipment").append($("<option></option>").val(this.Text).html(this.Text));
+                            });
+                        }
+                        else if (jsonData.Success == 0)
+                            toastr.error(jsonData.Message);
+                        else
+                            toastr.error(jsonData.Message);
+                    }
+                    else {
+                        alert("something went wrong");
+                    }
+                }
+            });
+        }
+    </script>

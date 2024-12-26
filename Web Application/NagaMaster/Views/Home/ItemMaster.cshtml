@@ -1,0 +1,970 @@
+﻿<div class="header-container fixed-top">
+    <header class="header navbar navbar-expand-sm">
+        <ul class="navbar-item flex-row">
+            <div class="sub-header-container">
+                <header class="header navbar navbar-expand-sm">
+                    <a href="javascript:void(0);" class="sidebarCollapse" data-placement="bottom">
+                        <i class="las la-bars"></i>
+                    </a>
+                    <ul class="navbar-nav flex-row">
+                        <li>
+                            <div class="page-header">
+                                <nav class="breadcrumb-one" aria-label="breadcrumb">
+                                    <ol class="breadcrumb">
+                                        <li class="breadcrumb-item active"><a href="javascript:void(0);">Master Pages</a></li>
+                                    </ol>
+                                </nav>
+                            </div>
+                        </li>
+                    </ul>
+                </header>
+            </div>
+            <li class="heading-nav nav-item dropdown fullscreen-dropdown d-none d-lg-flex">
+                @*PlantName :*@ @Request.Cookies["PlantName"].Value.ToString()
+            </li>
+        </ul>
+        <ul class="navbar-item flex-row ml-md-auto">
+            <li class="nav-item dropdown fullscreen-dropdown d-none d-lg-flex">
+                <a class="nav-link full-screen-mode d-flex align-center" href="javascript:void(0);">
+                    <i class="las la-compress pr-2" id="fullScreenIcon"></i>Full Display
+                </a>
+            </li>
+            <li class="nav-item dropdown notification-dropdown">
+                <a href="javascript:void(0);" class="nav-link dropdown-toggle position-relative" id="notificationDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <i class="las la-bell"></i>
+                    <div class="blink">
+                        <div class="circle"></div>
+                    </div>
+                </a>
+                <div class="dropdown-menu position-absolute" aria-labelledby="notificationDropdown">
+                    <div class="nav-drop is-notification-dropdown">
+
+                    </div>
+                </div>
+            </li>
+            <li class="nav-item dropdown user-profile-dropdown d-flex align-items-center pr-4">
+                <a href="javascript:void(0);" class="nav-link dropdown-toggle user" id="userProfileDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                    <div class="d-flex flex-column text-right">
+                        <span class="font-12 strong lh-normal">Welcome! @Request.Cookies["EmpDesc"].Value.ToString()</span>
+                        <span class="font-11 lighter lh-normal">@Request.Cookies["RoleName"].Value.ToString()</span>
+                    </div>
+                    <img src="~/assets/img/new-pizza.jpg" alt="avatar">
+                </a>
+                <div class="dropdown-menu position-absolute" aria-labelledby="userProfileDropdown">
+                    <div class="nav-drop is-account-dropdown">
+                        <div class="inner">
+                            <div class="nav-drop-body account-items p-0">
+                                <a id="profile-link" class="account-item" href="pages_profile.html">
+                                    <div class="media align-center">
+                                        <div class="media-left">
+                                            <div class="image">
+                                                <img class="rounded-circle avatar-xs" src="~/assets/img/new-pizza.jpg" alt="">
+                                            </div>
+                                        </div>
+                                        <div class="media-content ml-3">
+                                            <h6 class="font-13 mb-0 strong">@Request.Cookies["EmpDesc"].Value.ToString()</h6>
+                                            <small>@Request.Cookies["RoleName"].Value.ToString()</small>
+                                        </div>
+                                        <div class="media-right">
+                                            <i data-feather="check"></i>
+                                        </div>
+                                    </div>
+                                </a>
+                                <a class="account-item" href="pages_profile.html">
+                                    <div class="media align-center">
+                                        <div class="icon-wrap">
+                                            <i class="las la-user font-20"></i>
+                                        </div>
+                                        <div class="media-content ml-3">
+                                            <h6 class="font-13 mb-0 strong">My Account</h6>
+                                        </div>
+                                    </div>
+                                </a>
+                                <a class="account-item" href="pages_timeline.html">
+                                    <div class="media align-center">
+                                        <div class="icon-wrap">
+                                            <i class="las la-briefcase font-20"></i>
+                                        </div>
+                                        <div class="media-content ml-3">
+                                            <h6 class="font-13 mb-0 strong">My Activity</h6>
+                                        </div>
+                                    </div>
+                                </a>
+                                <a class="account-item settings">
+                                    <div class="media align-center">
+                                        <div class="icon-wrap">
+                                            <i class="las la-cog font-20"></i>
+                                        </div>
+                                        <div class="media-content ml-3">
+                                            <h6 class="font-13 mb-0 strong">Settings</h6>
+                                        </div>
+                                    </div>
+                                </a>
+                                <hr class="account-divider">
+                                <a class="account-item" href="~/Login/LoginPage">
+                                    <div class="media align-center">
+                                        <div class="icon-wrap">
+                                            <i class="las la-sign-out-alt font-20"></i>
+                                        </div>
+                                        <div class="media-content ml-3">
+                                            <h6 class="font-13 mb-0 strong ">Logout</h6>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </header>
+</div>
+<!-- Main Body Starts -->
+<div class="layout-px-spacing">
+    <div class="row layout-top-spacing">
+        <div class="col-xl-12 col-lg-12 col-sm-12  layout-spacing">
+            <div class="widget-content widget-content-area br-6">
+                <h4 class="table-header mb-4">Item Master</h4>
+                <div class="toggle-list col-sm-12">
+                    <div class="row e-tools mb-4">
+                        <div class="col-sm-12 Export-Tools">
+                            @if (ViewBag.IsEdit == 1)
+                            {
+                                <div class="ex-im">
+                                    <button class="btn btn-info" data-toggle="modal" data-target=".item-modal" tabindex="0" data-dismiss="modal">
+                                        <i class="las la-file-import la-lg pr-2"></i>Import
+                                    </button>
+                                    @*<button type="button" class="btn btn-success float-left"><i class="las la-lg la-file-download pr-2"></i>Export</button>*@
+                                    <div id="headingOne1">
+                                        <section class="mb-0 mt-0">
+                                            <button type="button" class="btn" onclick="funclear(0)">
+                                                <i class="las la-plus-circle la-lg"></i>Add Item
+                                            </button>
+                                        </section>
+                                    </div>
+                                </div>
+                            }
+                            </div>
+
+                        <div class="col-sm-6 add-s">
+
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Add item Modal Starts -->
+
+                <div id="itemModal" class="modal fade supplier-modal" tabindex="-1"
+                     role="dialog" aria-labelledby="exampleModal-supplierLabel"
+                     aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-scrollable modal-xl" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title">
+                                    Item Master
+                                </h5>
+                                <button type="button" class="close" data-dismiss="modal"
+                                        aria-label="Close">
+                                    <i class="las la-times" style="border-radius: 3px;"></i>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="media-body">
+                                    @*<form action="" method="post">*@
+                                    <input type="hidden" id="ItemId" value="" />
+                                        <div class="item-input-lane1 row">
+                                            <div class="form-group col-sm-4">
+                                                <label class="col-form-label pl-2">Material Code</label>
+                                                <div class="">
+                                                    <input class="form-control"
+                                                           type="text" id="MaterialCode">
+                                                </div>
+                                            </div>
+                                            <div class="form-group col-sm-4">
+                                                <label class="col-form-label pl-2">Material Desc</label>
+                                                <div class="">
+                                                    <input class="form-control" id="MaterialDesc"
+                                                           type="text">
+                                                </div>
+                                            </div>
+                                            <div class="form-group col-sm-4">
+                                                <label class="col-form-label pl-2">BUOM Name</label>
+                                                <div class="">
+                                                    <input class="form-control" id="BUOMName"
+                                                           type="text">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="item-input-lane2 row">
+                                            <div class="form-group col-sm-4">
+                                                <label class="col-form-label pl-2">Item Short Name1</label>
+                                                <div class="">
+                                                    <input class="form-control" id="ItemShortName1"
+                                                           type="text">
+                                                </div>
+                                            </div>
+                                            <div class="form-group col-sm-4">
+                                                <label class="col-form-label pl-2">Item Short Name2</label>
+                                                <div class="">
+                                                    <input class="form-control" id="ItemShortName2"
+                                                           type="text">
+                                                </div>
+                                            </div>
+                                            <div class="form-group col-sm-4">
+                                                <label class="col-form-label pl-2">AUOM Name</label>
+                                                <div class="">
+                                                    <input class="form-control" id="AUOMName"
+                                                           type="text">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="item-input-lane4 row">
+                                            <div class="form-group col-sm-4">
+                                                <label class="col-form-label pl-2">Period Indicators LED</label>
+                                                <div class="">
+                                                    <input class="form-control" id="PeriodIndicatorSLED"
+                                                           type="text">
+                                                </div>
+                                            </div>
+                                            <div class="form-group col-sm-4">
+                                                <label class="col-form-label pl-2">Product Group Code</label>
+                                                <div class="">
+                                                    <input class="form-control" id="ProdGroupCode"
+                                                           type="text">
+                                                </div>
+                                            </div>
+                                            <div class="form-group col-sm-4">
+                                                <label class="col-form-label pl-2">Product Group Desc</label>
+                                                <div class="">
+                                                    <input class="form-control" id="ProdGroupDesc"
+                                                           type="text">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="item-input-lane5 row">
+
+                                            <hr>
+
+                                        </div>
+                                        <div class="item-input-lane5 row">
+                                            <div class="form-group col-sm-3">
+                                                <label class="col-form-label pl-2">Size In Inch Code</label>
+                                                <div class="">
+                                                    <input class="form-control" id="SizeInInchCode"
+                                                           type="text">
+                                                </div>
+                                            </div>
+                                            <div class="form-group col-sm-3">
+                                                <label class="col-form-label pl-2">Size In Inch Desc</label>
+                                                <div class="">
+                                                    <input class="form-control" id="SizeInInchDesc"
+                                                           type="text">
+                                                </div>
+                                            </div>
+                                            <div class="form-group col-sm-3">
+                                                <label class="col-form-label pl-2">Denominator</label>
+                                                <div class="">
+                                                    <input class="form-control" id="Denominator"
+                                                           type="number">
+                                                </div>
+                                            </div>
+                                            <div class="form-group col-sm-3">
+                                                <label class="col-form-label pl-2">Numerator</label>
+                                                <div class="">
+                                                    <input class="form-control" id="Numerator"
+                                                           type="number">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="item-input-lane6 row">
+                                            <div class="form-group col-sm-3">
+                                                <label class="col-form-label pl-2">Box Qty InCrate</label>
+                                                <div class="">
+                                                    <input class="form-control" id="BoxQuantityInCrate"
+                                                           type="number">
+                                                </div>
+                                            </div>
+                                            <div class="form-group col-sm-3">
+                                                <label class="col-form-label pl-2">Shelf life Min</label>
+                                                <div class="">
+                                                    <input class="form-control" id="ShelflifeMin"
+                                                           type="number">
+                                                </div>
+                                            </div>
+                                            <div class="form-group col-sm-3">
+                                                <label class="col-form-label pl-2">Shelf life Max</label>
+                                                <div class="">
+                                                    <input class="form-control" id="ShelflifeMax"
+                                                           type="number">
+                                                </div>
+                                            </div>
+                                            <div class="form-group col-sm-3">
+                                                <label class="col-form-label pl-2">Gross Weight</label>
+                                                <div class="">
+                                                    <input class="form-control" id="GrossWgt"
+                                                           type="number">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="item-input-lane7 row">
+                                            <div class="form-group col-sm-3">
+                                                <label class="col-form-label pl-2">Net Weight</label>
+                                                <div class="">
+                                                    <input class="form-control" id="NetWgt"
+                                                           type="number">
+                                                </div>
+                                            </div>
+                                            <div class="form-group col-sm-3">
+                                                <label class="col-form-label">Min Tolerance</label>
+                                                <div class="">
+                                                    <input class="form-control" id="MinTolerance"
+                                                           type="number">
+                                                </div>
+                                            </div>
+                                            <div class="form-group col-sm-3">
+                                                <label class="col-form-labe pl-2">Max Tolerance</label>
+                                                <div class="">
+                                                    <input class="form-control" id="MaxTolerance"
+                                                           type="number">
+                                                </div>
+                                            </div>
+                                            <div class="form-group col-sm-3">
+                                                <label class="col-form-label col-sm-12">
+                                                    Status
+                                                </label>
+                                                <div class="col-sm-12">
+                                                    <select class="form-control w-100" id="Status">
+                                                        <option selected="selected" value="1">Active</option>
+                                                        <option value="0">Inactive</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                   
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button class="btn btn-danger" data-dismiss="modal" onclick="funclear(1)"><i class="flaticon-cancel-12"></i>Discard</button>
+                                <button type="submit"class="btn btn-primary" onclick="fnsave()">Save</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="table-responsive mb-4">
+                    <table id="tblItems" class="table table-hover item-mast " role="grid" style="width:100%">
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Main Body Ends -->
+
+<!-- Import Modal Starts -->
+
+<div id="importModal" class="modal fade item-modal" tabindex="-1" srole="dialog" aria-labelledby="exampleModal-supplierLabel"
+     aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable modal-xl modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Import Data</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i class="las la-times" style="border-radius: 3px;"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="media-body">
+                    <div class="supplierReport-input-lane1 row">
+                        <div class="form-group col-sm-6">
+                            <h6 class="ml-5">Import Template Format</h6>
+                            <button class="btn btn-info ml-5">
+                                <a href="~/ExcelFormatFile/MaterialForamt.xlsx" download="MaterialFormatFile">Download Template</a>
+                            </button>
+                        </div>
+                        <div class="form-group col-sm-3">
+                            <label for="formFile" class="form-label ml-5">Choose File</label>
+                            <input type="file" id="Excelfile1" name="Excelfile1" class="ml-5">
+                        </div>
+                        <div class="form-group col-sm-3">
+                            <div class="file-upload">
+                                <input class="btn btn-info" type="submit" id="LoadMiniGrid" value="Upload">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="supplierReport-input-lane2 row mt-3">
+                        <div class="form-group col-sm-12">
+
+                            <!-- Excel Grid Data Starts-->
+
+                            <div class="row">
+                                <div class="col">
+                                    <div class="multiCollapseReport">
+                                        <div class="card">
+                                            <table id="gridTable" class="table mb-5 col-sm-12 freeze-table  display nowrap" style="background-color: white; width: 100%;">
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Excel Grid Data Ends -->
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-danger" onclick="funuploadclear(1)" @*data-dismiss="modal"*@>
+                    <i class="flaticon-cancel-12"></i>
+                    Discard
+                </button>
+                <input type="submit" id="funImport" class="btn btn-primary" value="Save">
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Import Modal Ends -->
+<script>
+
+
+    $(document).on("click", "#LoadMiniGrid", function () {
+
+        var dataset = new Array();
+        var files = $("#Excelfile1").get(0).files;
+        console.log(files);
+
+        var formData = new FormData();
+        formData.append('Excelfile1', files[0]);
+        console.log(formData);
+
+        $.ajax({
+            url: '/Home/GetItemImport',
+            data: formData,
+            type: 'POST',
+            contentType: false,
+            processData: false,
+            success: function (jsonData) {
+                if (jsonData.Status == 0) {
+                    toastr.error('Please Select a Excel file');
+                }
+                console.log(jsonData);
+                len = jsonData.length;
+
+                if ($.fn.DataTable.fnIsDataTable("#gridTable"))
+                    $("#gridTable").dataTable().fnDestroy();
+
+                if (len == 0)
+                    alert("No Data Found !");
+
+
+                for (i = 0; i < len; i++) {
+
+                    dataset.push([(i+1),jsonData[i].MaterialCode, jsonData[i].MaterialDesc, jsonData[i].BUOMName, jsonData[i].ItemShortName1,
+                        jsonData[i].ItemShortName2, jsonData[i].Denominator, jsonData[i].AUOMName, jsonData[i].Numerator,
+                        jsonData[i].BoxQuantityInCrate, jsonData[i].ShelflifeMin, jsonData[i].ShelflifeMax, jsonData[i].PeriodIndicatorSLED,
+                        jsonData[i].ProdGroupCode, jsonData[i].ProdGroupDesc, jsonData[i].SizeInInchCode, jsonData[i].SizeInInchDesc,
+                        jsonData[i].GrossWgt, jsonData[i].NetWgt, jsonData[i].MinTolerance, jsonData[i].MaxTolerance])
+                }
+
+                $('#gridTable').DataTable({
+                    "autoWidth": true,
+                    "paging": true,
+                    data: dataset,
+                    columns: [{ title: "#" },{ title: "Material Code" }, { title: "Material Description" }, { title: "BUOM Name" }, { title: "Item Short Name1" },
+                    { title: "Item Short Name2" }, { title: "Denominator" }, { title: "AUOM" }, { title: "Numerator" }, { title: "Box Qty InCrate" },
+                    { title: "SL Min" }, { title: "SL Max" }, { title: "Period SLED" }, { title: "Product Code" }, { title: "Product Desc" },
+                    { title: "Size in Inch Code" }, { title: "Size in Inch Desc" }, { title: "Gross Wgt" }, { title: "Net Wgt" }, { title: "Min Tolerance" },
+                    { title: "Max Tolerance" }]
+                });
+
+            }
+        });
+    });
+
+    $(document).on("click", "#funImport", function () {
+        let files = document.getElementById("Excelfile1").value;
+
+        var arrData = [];
+        // loop over each table row (tr)
+        $("#gridTable tr").each(function () {
+            var currentRow = $(this);
+
+            var col1_value = currentRow.find("td:eq(1)").text();
+            var col2_value = currentRow.find("td:eq(2)").text();
+            var col3_value = currentRow.find("td:eq(3)").text();
+            var col4_value = currentRow.find("td:eq(4)").text();
+            var col5_value = currentRow.find("td:eq(5)").text();
+            var col6_value = currentRow.find("td:eq(6)").text();
+            var col7_value = currentRow.find("td:eq(7)").text();
+            var col8_value = currentRow.find("td:eq(8)").text();
+            var col9_value = currentRow.find("td:eq(9)").text();
+            var col10_value = currentRow.find("td:eq(10)").text();
+            var col11_value = currentRow.find("td:eq(11)").text();
+            var col12_value = currentRow.find("td:eq(12)").text();
+            var col13_value = currentRow.find("td:eq(13)").text();
+            var col14_value = currentRow.find("td:eq(14)").text();
+            var col15_value = currentRow.find("td:eq(15)").text();
+            var col16_value = currentRow.find("td:eq(16)").text();
+            var col17_value = currentRow.find("td:eq(17)").text();
+            var col18_value = currentRow.find("td:eq(18)").text();
+            var col19_value = currentRow.find("td:eq(19)").text();
+            var col20_value = currentRow.find("td:eq(20 )").text();
+
+
+            var obj = {};
+            obj.MaterialCode = col1_value;
+            obj.MaterialDesc = col2_value;
+            obj.BUOMName = col3_value;
+            obj.ItemShortName1 = col4_value;
+            obj.ItemShortName2 = col5_value;
+            obj.Denominator = col6_value;
+            obj.AUOMName = col7_value;
+            obj.Numerator = col8_value;
+            obj.BoxQuantityInCrate = col9_value;
+            obj.ShelflifeMin = col10_value;
+            obj.ShelflifeMax = col11_value;
+            obj.PeriodIndicatorSLED = col12_value;
+            obj.ProdGroupCode = col13_value;
+            obj.ProdGroupDesc = col14_value;
+            obj.SizeInInchCode = col15_value;
+            obj.SizeInInchDesc = col16_value;
+            obj.GrossWgt = col17_value;
+            obj.NetWgt = col18_value;
+            obj.MinTolerance = col19_value;
+            obj.MaxTolerance = col20_value;
+
+            arrData.push(obj);
+
+        });
+        console.log(JSON.stringify(arrData));
+        if (arrData == "") {
+            toastr.error('Fill the Grid');
+            return true;
+        }
+
+        $.ajax({
+            type: "POST",
+            url: "/Home/ImportAddItem",
+            data: JSON.stringify(arrData),
+            dataType: "json",
+            contentType: "application/json; charset=utf-8",
+            success: function (jsonData) {
+                if (jsonData.Success == 0) {
+                    toastr.error(jsonData.Message);
+                } else if (jsonData.Success == 1) {
+                    toastr.success(jsonData.Message);
+                    LoadGrid();
+                    funuploadclear(1);
+                }
+            },
+            failure: function () { toastr.error('Failed'); }
+        });
+
+    });
+
+    function funuploadclear(a) {
+        $("#Excelfile1").val('');
+      
+        if (a == 0)
+            $('#importModal').modal("show");
+        else {
+            $("#gridTable").dataTable().empty();
+            $('#importModal').modal("hide");
+
+        }
+            
+    }
+</script>
+<script>
+    function fndelete(id) {
+        if (confirm("Do you want to delete this Item?") == true) {
+            $.ajax({
+                type: "POST",
+                url: "/Home/DeleteItems?Id=" + id,
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+
+                success: function (jsonData) {
+                    if (jsonData.Success == 0) {
+                        toastr.error(jsonData.Message);
+                    }
+                    else if (jsonData.Success == 1) {
+                        toastr.success(jsonData.Message);
+                    }
+                    LoadGrid();
+                },
+                error: function () {
+                    console.log('error');
+                }
+            });
+        }
+    }
+</script>
+<script>
+    function fundetails(a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p, q, r, s, t, u, v) {
+        $('#ItemId').val(a);
+        $('#MaterialCode').val(b);
+        $('#MaterialDesc').val(c);
+        $('#BUOMName').val(d);
+        $('#ItemShortName1').val(e);
+        $('#ItemShortName2').val(f);
+        $('#Denominator').val(g);
+        $('#AUOMName').val(h);
+        $('#Numerator').val(i);
+        $('#BoxQuantityInCrate').val(j);
+        $('#ShelflifeMin').val(k);
+        $('#ShelflifeMax').val(l);
+        $('#PeriodIndicatorSLED').val(m);
+        $('#ProdGroupCode').val(n);
+        $('#ProdGroupDesc').val(o);
+        $('#SizeInInchCode').val(p);
+        $('#SizeInInchDesc').val(q);
+        $('#GrossWgt').val(r);
+        $('#NetWgt').val(s);
+        $('#MinTolerance').val(t);
+        $('#MaxTolerance').val(u);
+        if (v == '1')
+            $('#Status').val(1);
+        else
+            $('#Status').val(0);
+        $('#itemModal').modal("show");
+
+    }
+
+
+    $(document).ready(function () {
+        LoadGrid();
+    });
+
+    function LoadGrid() {
+        var dataset = new Array();
+        $.ajax({
+            type: "GET",
+            url: "/Home/GetItems",
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (jsonData) {
+
+
+                if (jsonData != null) {
+                    len = jsonData.length;
+                    console.log(jsonData);
+                    if ($.fn.DataTable.fnIsDataTable("#tblItems"))
+                        $("#tblItems").dataTable().fnDestroy();
+
+                    if (len == 0)
+                        alert("No Data Found !");
+
+
+                    for (i = 0; i < len; i++) {
+
+                        var Status = jsonData[i].Status == 1 ? "Active" : "Inactive";
+
+                        dataset.push(["<div class=\"text-center flex\"><a href=\"#\" class=\"tableIconA bs-tooltip\" data-toggle=\"modal\"  " +
+                            "onclick=\"fundetails('" + jsonData[i].Id + "','" + jsonData[i].MaterialCode + "','" + jsonData[i].MaterialDesc + "','" + jsonData[i].BUOMName +
+                            "','" + jsonData[i].ItemShortName1 + "','" + jsonData[i].ItemShortName2 + "','" + jsonData[i].Denominator + "','" + jsonData[i].AUOMName +
+                            "','" + jsonData[i].Numerator + "','" + jsonData[i].BoxQuantityInCrate + "','" + jsonData[i].ShelflifeMin + "','" + jsonData[i].ShelflifeMax +
+                            "','" + jsonData[i].PeriodIndicatorSLED + "','" + jsonData[i].ProdGroupCode + "','" + jsonData[i].ProdGroupDesc + "','" + jsonData[i].SizeInInchCode +
+                            "','" + jsonData[i].SizeInInchDesc + "','" + jsonData[i].GrossWgt + "','" + jsonData[i].NetWgt + "','" + jsonData[i].MinTolerance +
+                            "','" + jsonData[i].MaxTolerance + "','" + jsonData[i].Status + "')\"><i class=\"las la-edit font-20 text-primary\"aria-hidden=\"true\"style=\"color: #0056b3!important;font-size: 20px;\"></i></a></div>",(i + 1), jsonData[i].MaterialCode, jsonData[i].MaterialDesc, jsonData[i].BUOMName, jsonData[i].ItemShortName1,
+                            jsonData[i].ItemShortName2, jsonData[i].Denominator, jsonData[i].AUOMName, jsonData[i].Numerator,
+                            jsonData[i].BoxQuantityInCrate, jsonData[i].ShelflifeMin, jsonData[i].ShelflifeMax, jsonData[i].PeriodIndicatorSLED,
+                            jsonData[i].ProdGroupCode, jsonData[i].ProdGroupDesc, jsonData[i].SizeInInchCode, jsonData[i].SizeInInchDesc,
+                            jsonData[i].GrossWgt, jsonData[i].NetWgt, jsonData[i].MinTolerance, jsonData[i].MaxTolerance, Status,
+
+
+
+
+
+                            "<div class=\"text-center flex\"><a href=\"#\" class=\"tableIconA bs-tooltip\"  " +
+                            "onclick=\"fndelete('" + jsonData[i].Id + "') \"><i class=\"las la-trash \" aria-hidden=\"true\" style=\"color: tomato;font-size: 20px;\"></i></a></div>"])
+
+
+
+                    }
+
+                    $('#tblItems').DataTable({
+
+                        "autoWidth": true,
+                        "sScrollY": "300px",
+                        "sScrollX": "100%",
+                        "language": {
+                            "paginate": {
+                                "previous": "<i class='las la-angle-left'></i>",
+                                "next": "<i class='las la-angle-right'></i>"
+                            }
+                        },
+                        'aoColumnDefs': [{
+                            'visible': Boolean(@(ViewBag.IsEdit)),
+                            'aTargets' : 23
+                        }, {
+                            'visible': Boolean(@(ViewBag.IsEdit)),
+                           'aTargets' : 0
+                           }],
+                        data: dataset,
+                        columns: [{ title: "Edit" }, { title: "Sl No" },{ title: "Material Code" }, { title: "Material Description" }, { title: "BUOM Name" }, { title: "Item Short Name1" },
+                            { title: "Item Short Name2" }, { title: "Denominator" },{ title: "AUOM" }, { title: "Numerator" }, { title: "Box Qty InCrate" },
+                            { title: "SL Min" }, { title: "SL Max" }, { title: "Period SLED" }, { title: "Product Code" }, { title: "Product Desc" },
+                            { title: "Size in Inch Code" }, { title: "Size in Inch Desc" }, { title: "Gross Wgt" }, { title: "Net Wgt" }, { title: "Min Tolerance" },
+                            { title: "Max Tolerance" }, { title: "Status" },  { title: "Delete" }]
+                    });
+
+                } else {
+                    alert("something went wrong");
+                }
+            }
+        });
+    }
+
+
+
+    function fnsave() {
+        let MaterialCode = document.getElementById("MaterialCode").value;
+        let MaterialDesc = document.getElementById('MaterialDesc').value;
+        let BUOMName = document.getElementById('BUOMName').value;
+        let ItemShortName1 = document.getElementById('ItemShortName1').value;
+        let ItemShortName2 = document.getElementById('ItemShortName2').value;
+        let Denominator = document.getElementById('Denominator').value;
+        let AUOMName = document.getElementById('AUOMName').value;
+        let Numerator = document.getElementById('Numerator').value;
+        let BoxQuantityInCrate = document.getElementById('BoxQuantityInCrate').value;
+        let ShelflifeMin = document.getElementById('ShelflifeMin').value;
+        let ShelflifeMax = document.getElementById('ShelflifeMax').value;
+        let PeriodIndicatorSLED = document.getElementById('PeriodIndicatorSLED').value;
+        let ProdGroupCode = document.getElementById('ProdGroupCode').value;
+        let ProdGroupDesc = document.getElementById('ProdGroupDesc').value;
+        let SizeInInchCode = document.getElementById('SizeInInchCode').value;
+        let SizeInInchDesc = document.getElementById('SizeInInchDesc').value;
+        let GrossWgt = document.getElementById('GrossWgt').value;
+        let NetWgt = document.getElementById('NetWgt').value;
+        let MinTolerance = document.getElementById('MinTolerance').value;
+        let MaxTolerance = document.getElementById('MaxTolerance').value;
+        //let Status = document.getElementById('Status').value;
+
+        if (MaterialCode == "") {
+            toastr.error('Please Enter MaterialCode');
+            return true;
+        }
+        if (MaterialDesc == "") {
+
+            toastr.error('Please Enter MaterialDesc');
+            return true;
+        }
+        if (BUOMName == "") {
+
+            toastr.error('Please Enter BUOMName');
+            return true;
+        }
+
+        if (ItemShortName1 == "") {
+
+            toastr.error('Please Enter ItemShortName1');
+            return true;
+        }
+        if (ItemShortName2 == "") {
+
+            toastr.error('Please Enter ItemShortName2');
+            return true;
+        }
+        if (Denominator == "") {
+
+            toastr.error('Please Enter Denominator');
+            return true;
+        }
+        if (AUOMName == "") {
+
+            toastr.error('Please Enter AUOMName');
+            return true;
+        }
+        if (Numerator == "") {
+
+            toastr.error('Please Enter Numerator');
+            return true;
+        }
+        if (BoxQuantityInCrate == "") {
+
+            toastr.error('Please Enter BoxQuantityInCrate');
+            return true;
+        }
+        if (ShelflifeMin == "") {
+
+            toastr.error('Please Enter ShelflifeMin');
+            return true;
+        }
+        if (ShelflifeMax == "") {
+
+            toastr.error('Please Enter ShelflifeMax');
+            return true;
+        }
+        if (PeriodIndicatorSLED == "") {
+
+            toastr.error('Please Enter PeriodIndicatorSLED');
+            return true;
+        }
+        if (ProdGroupCode == "") {
+
+            toastr.error('Please Enter ProdGroupCode');
+            return true;
+        }
+        if (ProdGroupDesc == "") {
+
+            toastr.error('Please Enter ProdGroupDesc');
+            return true;
+        }
+        if (SizeInInchCode == "") {
+
+            toastr.error('Please Enter SizeInInchCode');
+            return true;
+        }
+        if (SizeInInchDesc == "") {
+
+            toastr.error('Please Enter SizeInInchDesc');
+            return true;
+        }
+        if (GrossWgt == "") {
+
+            toastr.error('Please Enter GrossWgt');
+            return true;
+        }
+        if (NetWgt == "") {
+
+            toastr.error('Please Enter NetWgt');
+            return true;
+        }
+        if (MinTolerance == "") {
+
+            toastr.error('Please Enter MinTolerance');
+            return true;
+        }
+        if (MaxTolerance == "") {
+
+            toastr.error('Please Enter MaxTolerance');
+            return true;
+        }
+        //if (Status == "") {
+
+        //    toastr.error('Please Enter Status');
+        //    return true;
+        //}
+
+        var purl = '';
+        var ptype = '';
+
+
+        if ($('#ItemId').val() == '' || $('#ItemId').val() == 0) {
+            purl = "/Home/AddItems";
+            ptype = "POST";
+            $('#ItemId').val(0);
+
+        }
+        else {
+            purl = "/Home/EditItems";
+            ptype = "POST";
+
+        }
+
+        $.ajax({
+            type: ptype,
+            url: purl,
+            data: JSON.stringify({
+                "id": parseInt($('#ItemId').val()),
+                "MaterialCode": $('#MaterialCode').val(),
+                "MaterialDesc": $('#MaterialDesc').val(),
+                "BUOMName": $('#BUOMName').val(),
+                "ItemShortName1": $('#ItemShortName1').val(),
+                "ItemShortName2": $('#ItemShortName2').val(),
+                "Denominator": $('#Denominator').val(),
+                "AUOMName": $('#AUOMName').val(),
+                "Numerator": $('#Numerator').val(),
+                "BoxQuantityInCrate": $('#BoxQuantityInCrate').val(),
+                "ShelflifeMin": $('#ShelflifeMin').val(),
+                "ShelflifeMax": $('#ShelflifeMax').val(),
+                "PeriodIndicatorSLED": $('#PeriodIndicatorSLED').val(),
+                "ProdGroupCode": $('#ProdGroupCode').val(),
+                "ProdGroupDesc": $('#ProdGroupDesc').val(),
+                "SizeInInchCode": $('#SizeInInchCode').val(),
+                "SizeInInchDesc": $('#SizeInInchDesc').val(),
+                "GrossWgt": $('#GrossWgt').val(),
+                "NetWgt": $('#NetWgt').val(),
+                "MinTolerance": $('#MinTolerance').val(),
+                "MaxTolerance": $('#MaxTolerance').val(),
+                "Status": $('#Status').val(),
+                "CreatedBy": 1,
+                "CreatedOn": new Date(),
+                "Updatedby": 1,
+                "UpdatedOn": new Date(),
+
+
+            }),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (response) {
+                console.log(response);
+                if (response.Success == 0) {
+                    toastr.error(response.Message);
+                }
+                else if (response.Success == 1) {
+                    toastr.success(response.Message);
+                    funclear(1);
+                    LoadGrid();
+                }
+                else {
+                    toastr.error('something went wrong' + response.Message);
+                }
+            }
+        });
+    }
+
+
+
+    function funclear(a) {
+        $('#ItemId').val("");
+        $('#MaterialCode').val("");
+        $('#MaterialDesc').val("");
+        $('#BUOMName').val("");
+        $('#ItemShortName1').val("");
+        $('#ItemShortName2').val("");
+        $('#Denominator').val("");
+        $('#AUOMName').val("");
+        $('#Numerator').val("");
+        $('#BoxQuantityInCrate').val("");
+        $('#ShelflifeMin').val("");
+        $('#ShelflifeMax').val("");
+        $('#PeriodIndicatorSLED').val("");
+        $('#ProdGroupCode').val("");
+        $('#ProdGroupDesc').val("");
+        $('#SizeInInchCode').val("");
+        $('#SizeInInchDesc').val("");
+        $('#GrossWgt').val("");
+        $('#NetWgt').val("");
+        $('#MinTolerance').val("");
+        $('#MaxTolerance').val("");
+        $('#Status').val(1);
+
+        if (a == 0)
+            $('#itemModal').modal("show");
+        else
+            $('#itemModal').modal("hide");
+    }
+
+
+    toastr.options = {
+        closeButton: false,
+        debug: false,
+        newestOnTop: true,
+        progressBar: true,
+        positionClass: "toast-top-right",
+        preventDuplicates: false,
+        onclick: null,
+        showDuration: "5000",
+        hideDuration: "1000",
+        timeOut: "5000",
+        extendedTimeOut: "1000",
+        showEasing: "swing",
+        hideEasing: "linear",
+        showMethod: "fadeIn",
+        hideMethod: "fadeOut",
+    };
+</script>

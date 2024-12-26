@@ -1,0 +1,466 @@
+﻿@model NagaMaster.Models.LayoutModel
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no">
+    <title>NAGA</title>
+    <!-- <link rel="icon" type="image/x-icon" href="assets/img/favicon.ico"/> -->
+    <!-- Common Styles Starts -->
+    <link href="~/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/assets/css/main.css" rel="stylesheet" type="text/css" />
+    <link href="~/assets/css/structure.css" rel="stylesheet" type="text/css" />
+    <link href="~/plugins/perfect-scrollbar/perfect-scrollbar.css" rel="stylesheet" type="text/css" />
+    <!-- <link href="plugins/highlight/styles/monokai-sublime.css" rel="stylesheet" type="text/css" /> -->
+    @*<link rel="stylesheet" href="custom.css">*@
+    <link href="~/Content/custom.css" rel="stylesheet" />
+    <!-- Common Styles Ends -->
+    <!-- Common Icon Starts -->
+    <link rel="stylesheet" href="~/line-awesome-1.3.0/1.3.0/css/line-awesome.min.css">
+
+    <!-- Common Icon Ends -->
+    <!-- Page Level Plugin/Style Starts -->
+    <link href="~/assets/css/loader.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="~/plugins/table/datatable/datatables.css">
+    <link rel="stylesheet" type="text/css" href="~/plugins/table/datatable/dt-global_style.css">
+    <link href="~/Content/toastr.min.css" rel="stylesheet" />
+    <link href="~/Content/select2.min.css" rel="stylesheet" />
+    <link href="~/Content/select2.min.css" rel="stylesheet" />
+
+
+    @Scripts.Render("~/bundles/jquery")
+
+    <!-- Page Level Plugin/Style Ends -->
+
+</head>
+
+
+<body>
+    <!-- Loader Starts -->
+    <div id="load_screen">
+        <div class="boxes">
+            <div class="box">
+                <div></div><div></div><div></div><div></div>
+            </div>
+            <div class="box">
+                <div></div><div></div><div></div><div></div>
+            </div>
+            <div class="box">
+                <div></div><div></div><div></div><div></div>
+            </div>
+            <div class="box">
+                <div></div><div></div><div></div><div></div>
+            </div>
+        </div>
+        <p class="neptune-loader-heading">Neptune</p>
+    </div>
+    <!--  Loader Ends -->
+    <!--  Main Container Starts  -->
+    <div class="main-container" id="container">
+        <div class="overlay"></div>
+        <div class="search-overlay"></div>
+        <div class="rightbar-overlay"></div>
+        <!--  Sidebar Starts  -->
+        <div class="sidebar-wrapper sidebar-theme">
+            <nav id="sidebar">
+                <ul class="navbar-item theme-brand flex-row  text-center">
+                    <li class="nav-item theme-logo">
+                        <a href="ItemMaster.html">
+                            <img src="~/assets/img/logo-oyalo.png" class="navbar-logo" alt="logo" style="width: 150px;border-radius: 10px;">
+                        </a>
+                    </li>
+                    <!-- <li class="nav-item theme-text">
+                        <a href="ItemMaster.html" class="nav-link"> Naga </a>
+                    </li> -->
+                </ul>
+
+
+
+                <ul class="list-unstyled menu-categories" id="accordionExample" style="overflow-y:auto;">
+                    @if (Model != null)
+                    {
+                        if (Model.menu.Where(x => x.MenuType == 1).Count() >= 1)
+                        {
+                            var menus = Model.menu.Where(x => x.MenuType == 1).ToList();
+                            <li class="menu" onclick="myfunctionName(21)">
+                                <a href="#masterpages" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                                    <div class="">
+                                        <i class="las la-tv"></i>
+                                        <span id="masterPageTitle">Master Pages</span>
+                                    </div>
+                                    <div>
+                                        <i class="las la-angle-right sidemenu-right-icon"></i>
+                                    </div>
+                                </a>
+                                <ul class="collapse submenu list-unstyled collapse" id="masterpages" data-parent="#accordionExample">
+                                    @for (int i = 0; i < menus.Count; i++)
+                                    {
+                                        if (menus[i].MenuId == Globals.Item_Master && menus[i].IsVisible == 1)
+                                        {
+                                            <li class="">
+                                                <a href="~/Home/ItemMaster"> Item Master </a>
+                                            </li>
+                                        }
+                                        if (menus[i].MenuId == Globals.Employee_Master && menus[i].IsVisible == 1)
+                                        {
+                                            <li>
+                                                <a href="~/Home/EmployeeMaster"> Employee Master </a>
+                                            </li>
+                                        }
+                                        if (menus[i].MenuId == Globals.System_User_Master && menus[i].IsVisible == 1)
+                                        {
+                                            <li>
+                                                <a href="~/Home/SysUserMaster"> System User Master </a>
+                                            </li>
+                                        }
+                                        if (menus[i].MenuId == Globals.Unit_Master && menus[i].IsVisible == 1)
+                                        {
+                                            <li>
+                                                <a href="~/Home/UnitMaster"> Unit Master </a>
+                                            </li>
+                                        }
+                                        if (menus[i].MenuId == Globals.CrateMaster && menus[i].IsVisible == 1)
+                                        {
+                                            <li>
+                                                <a href="~/Home/CrateMaster"> Crate Master</a>
+                                            </li>
+                                        }
+                                        if (menus[i].MenuId == Globals.COM_Settings && menus[i].IsVisible == 1)
+                                        {
+                                            <li>
+                                                <a href="~/Home/SettingsMaster"> COM Settings</a>
+                                            </li>
+                                        }
+                                        if (menus[i].MenuId == Globals.PlantMaster && menus[i].IsVisible == 1)
+                                        {
+                                            <li>
+                                                <a href="~/Home/PlantMaster">PlantMaster</a>
+                                            </li>
+                                        }
+                                        if (menus[i].MenuId == Globals.RackMaster && menus[i].IsVisible == 1)
+                                        {
+                                            <li>
+                                                <a href="~/Home/RackMaster">RackMaster</a>
+                                            </li>
+                                        }
+                                        if (menus[i].MenuId == Globals.UserRole && menus[i].IsVisible == 1)
+                                        {
+                                            <li>
+                                                <a href="~/Home/UserRole">UserRole</a>
+                                            </li>
+                                        }
+                                        if (menus[i].MenuId == Globals.DeviceUserMaster && menus[i].IsVisible == 1)
+                                        {
+                                            <li>
+                                                <a href="~/Home/DeviceUserMaster">DeviceUser Master</a>
+                                            </li>
+                                        }
+
+                                    }
+
+                                </ul>
+                            </li>
+                        }
+                        if (Model.menu.Where(x => x.MenuType == 2).Count() >= 1)
+                        {
+                            var menus = Model.menu.Where(x => x.MenuType == 2).ToList();
+                            <li class="menu">
+                                <a href="#servicepages" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                                    <div class="">
+                                        <i class="las la-wrench la-lg"></i>
+                                        <span id="services">Services</span>
+                                    </div>
+                                    <div>
+                                        <i class="las la-angle-right sidemenu-right-icon"></i>
+                                    </div>
+                                </a>
+                                <ul class="collapse submenu list-unstyled collapse" id="servicepages" data-parent="#accordionExample">
+                                    @for (int i = 0; i < menus.Count; i++)
+                                    {
+                                        if (menus[i].MenuId == Globals.Shift_Details && menus[i].IsVisible == 1)
+                                        {
+                                            <li>
+                                                <a href="~/Service/Shift"> Shift Details </a>
+                                            </li>
+                                        }
+                                        if (menus[i].MenuId == Globals.AssignMent && menus[i].IsVisible == 1)
+                                        {
+                                            <li class="">
+                                                <a href="~/Service/Assignment"> Assignment </a>
+                                            </li>
+                                        }
+                                        if (menus[i].MenuId == Globals.STOPicklist && menus[i].IsVisible == 1)
+                                        {
+                                            <li>
+                                                <a href="~/Service/PickList">STO PickList</a>
+                                            </li>
+                                        }
+                                        if (menus[i].MenuId == Globals.SALESPicklist && menus[i].IsVisible == 1)
+                                        {
+                                            <li>
+                                                <a href="~/Service/SalesPicklist">SALES Picklist</a>
+                                            </li>
+                                        }
+                                        if (menus[i].MenuId == Globals.STORejection && menus[i].IsVisible == 1)
+                                        {
+                                            <li>
+                                                <a href="~/Service/frmBatchRejectRelease">Reject and Release</a>
+                                            </li>
+                                        }
+
+                                        if (menus[i].MenuId == Globals.CFARejection && menus[i].IsVisible == 1)
+                                        {
+                                            <li>
+                                                <a href="~/Service/frmBatchHold">Batch Hold</a>
+                                            </li>
+                                        }
+                                        if (menus[i].MenuId == Globals.ShipmentPoApproval && menus[i].IsVisible == 1)
+                                        {
+                                            <li>
+                                                <a href="~/Service/frmApproval">Shipment/PO Approval</a>
+                                            </li>
+                                        }
+                                        if (menus[i].MenuId == Globals.CrateMissing && menus[i].IsVisible == 1)
+                                        {
+                                            <li>
+                                                <a href="~/Service/MissingCrates">Missing Crates</a>
+                                            </li>
+                                        }
+                                    }
+                                </ul>
+                            </li>
+                        }
+                        if (Model.menu.Where(x => x.MenuType == 3).Count() >= 1)
+                        {
+                            var menus = Model.menu.Where(x => x.MenuType == 3).ToList();
+                            <li class="menu">
+                                <a href="#reportspages" data-active="true" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                                    <div class="">
+                                        <i class="las la-folder"></i>
+                                        <span id="reports">Reports</span>
+                                    </div>
+                                    <div>
+                                        <i class="las la-angle-right sidemenu-right-icon"></i>
+                                    </div>
+                                </a>
+                                <ul class="collapse submenu list-unstyled collapse" id="reportspages" data-parent="#accordionExample">
+                                    @for (int i = 0; i < menus.Count; i++)
+                                    {
+                                        if (menus[i].MenuId == Globals.STOCK_SMART_RPT && menus[i].IsVisible == 1)
+                                        {
+                                            <li class="">
+                                                <a href="~/Report/StockSmartReport">Stock Smart Report</a>
+                                            </li>
+                                        }
+                                        if (menus[i].MenuId == Globals.Plant_Wise_Report && menus[i].IsVisible == 1)
+                                        {
+                                            <li class="">
+                                                <a href="~/Report/RptPeriodWise_FillScreen">PeriodWise Report</a>
+                                            </li>
+                                        }
+                                        if (menus[i].MenuId == Globals.PutAwayReport && menus[i].IsVisible == 1)
+                                        {
+                                            <li class="">
+                                                <a href="~/Report/RptPutaway_FillScreen">Putaway Report</a>
+                                            </li>
+                                        }
+                                        if (menus[i].MenuId == Globals.STORejectionReport && menus[i].IsVisible == 1)
+                                        {
+                                            <li>
+                                                <a href="~/Report/RejectionReport">Rejection Report</a>
+                                            </li>
+                                        }
+                                        if (menus[i].MenuId == Globals.CFA_Rejection_Report && menus[i].IsVisible == 1)
+                                        {
+                                            <li>
+                                                <a href="~/Report/CFARejectionReport">CFA Rejection Report</a>
+                                            </li>
+                                        }
+                                        @*if (menus[i].MenuId == Globals.Production_Stock_Report && menus[i].IsVisible == 1)
+                                            {
+                                                <li>
+                                                    <a href="~/Report/ProductionStockReport">Production Stock</a>
+                                                </li>
+                                            }
+                                            if (menus[i].MenuId == Globals.CFA_Stock_Report && menus[i].IsVisible == 1)
+                                            {
+                                                <li>
+                                                    <a href="~/Report/CFAStockReport">CFA Stock</a>
+                                                </li>
+                                            }*@
+                                        if (menus[i].MenuId == Globals.Production_Dispatch_Report && menus[i].IsVisible == 1)
+                                        {
+                                            <li>
+                                                <a href="~/Report/ProductionDispatchReport">Production Dispatch</a>
+                                            </li>
+                                        }
+                                        if (menus[i].MenuId == Globals.CFA_Dispatch_Report && menus[i].IsVisible == 1)
+                                        {
+                                            <li>
+                                                <a href="~/Report/CFADispatchReport">CFA Dispatch</a>
+                                            </li>
+                                        }
+
+                                    }
+                                </ul>
+                            </li>
+                        }
+                        if (Model.menu.Where(x => x.MenuType == 4).Count() >= 1)
+                        {
+                            var menus = Model.menu.Where(x => x.MenuType == 4).ToList();
+                            <li class="menu">
+                                <a href="#stockimport" data-active="true" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                                    <div class="">
+                                        <i class="las la-boxes"></i>
+                                        <span>Stock Import</span>
+                                    </div>
+                                    <div>
+                                        <i class="las la-angle-right sidemenu-right-icon"></i>
+                                    </div>
+                                </a>
+                                <ul class="collapse submenu list-unstyled collapse" id="stockimport" data-parent="#accordionExample">
+                                    @for (int i = 0; i < menus.Count; i++)
+                                    {
+                                        if (menus[i].MenuId == Globals.Import_WithoutBarcode && menus[i].IsVisible == 1)
+                                        {
+                                            <li>
+                                                <a href="~/StockImport/NoBarcodeData">Import Without Barcode</a>
+                                            </li>
+                                        }
+                                        if (menus[i].MenuId == Globals.Import_WithBarcode && menus[i].IsVisible == 1)
+                                        {
+                                            <li>
+                                                <a href="~/StockImport/BarcodeWithData">Import With Barcode</a>
+                                            </li>
+                                        }
+                                    }
+                                </ul>
+                            </li>
+                        }
+                        if (Model.menu.Where(x => x.MenuType == 4).Count() >= 1)
+                        {
+                            var menus = Model.menu.Where(x => x.MenuType == 4).ToList();
+                            <li class="menu">
+                                <a href="#stockaudit" data-active="true" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                                    <div class="">
+                                        <i class="las la-boxes"></i>
+                                        <span>Audit</span>
+                                    </div>
+                                    <div>
+                                        <i class="las la-angle-right sidemenu-right-icon"></i>
+                                    </div>
+                                </a>
+                                <ul class="collapse submenu list-unstyled collapse" id="stockaudit" data-parent="#accordionExample">
+                                    @for (int i = 0; i < menus.Count; i++)
+                                    {
+                                        if (menus[i].MenuId == Globals.Stock_Audit && menus[i].IsVisible == 1)
+                                        {
+                                            <li>
+                                                <a href="~/Audit/StockAudit">Stock Audit</a>
+                                            </li>
+                                        }
+                                    }
+                                </ul>
+                            </li>
+                        }
+                    }
+                </ul>
+            </nav>
+        </div>
+
+        <div id="content" class="main-content">
+            @RenderBody()
+
+            <div class="responsive-msg-component">
+                <p>
+                    <a class="close-msg-component"><i class="las la-times"></i></a>
+                    Please reload the page to view the responsive functionalities
+                </p>
+            </div>
+            <!-- Copyright Footer Starts -->
+            <div class="footer-wrapper">
+                <div class="footer-section f-section-1">
+                    @*<p class="">Copyright © 2021 <a target="_blank" href="https://www.niraltek.com/">Niraltek Solutions</a>, All rights reserved.</p>*@
+                </div>
+            </div>
+            <!-- Copyright Footer Ends -->
+            <!-- Arrow Starts -->
+            <div class="scroll-top-arrow" style="display: none;">
+                <i class="las la-angle-up"></i>
+            </div>
+            <!-- Arrow Ends -->
+        </div>
+        <!--  Content Area Ends  -->
+
+    </div>
+
+    <!-- Main Container Ends -->
+    <!-- Common Script Starts -->
+    <script src="~/assets/js/libs/jquery-3.1.1.min.js"></script>
+    <script src="~/bootstrap/js/popper.min.js"></script>
+    <script src="~/assets/js/app.js"></script>
+    <script src="~/bootstrap/js/bootstrap.min.js"></script>
+    <script src="~/plugins/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+
+
+    <script src="~/assets/js/custom.js"></script>
+    <script src="~/plugins/table/datatable/datatables.js"></script>
+
+    <!-- Common Script Ends -->
+    <!-- Page Level Plugin/Script Starts -->
+    <script src="~/assets/js/loader.js"></script>
+    <script src="~/plugins/table/datatable/datatables.js"></script>
+    <script src="~/Scripts/toastr.min.js"></script>
+    <script src="~/Scripts/select2.min.js"></script>
+
+
+    @RenderSection("scripts", required: false)
+    <script>
+        $(document).ready(function () {
+            App.init();
+        });
+    </script>
+
+    <script>
+        $(document).ready(function () {
+            var currentURL = window.location.href;
+
+            $(".menu a").each(function () {
+                if (currentURL.indexOf($(this).attr("href")) !== -1) {
+                    $(this).closest("li").addClass("active");
+                    $(this).closest("ul").addClass("collapse submenu list-unstyled collapse show");
+                    $(this).closest("a").addClass("dropdown-toggle collapsed");
+                }
+            });
+        });
+    </script>
+
+    <script>
+        $(document).ready(function () {
+            $('#basic-dt').DataTable({
+                "language": {
+                    "paginate": {
+                        "previous": "<i class='las la-angle-left'></i>",
+                        "next": "<i class='las la-angle-right'></i>"
+                    }
+                },
+                "lengthMenu": [5, 10, 15, 20],
+                "pageLength": 5
+            });
+
+            $('.check').on('click', function (e) {
+                // e.preventDefault();
+                // Get the column API object
+                var column = table.column($(this).attr('data-column'));
+                // Toggle the visibility
+                column.visible(!column.visible()).$(this.checked);
+            });
+        });
+    </script>
+
+    <!-- Page Level Plugin/Script Ends -->
+</body>
+</html>

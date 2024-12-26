@@ -1,0 +1,435 @@
+﻿@model NagaMaster.Models.Service.BatchHoldModel
+
+<div class="header-container fixed-top">
+    <header class="header navbar navbar-expand-sm">
+        <ul class="navbar-item flex-row">
+            <div class="sub-header-container">
+                <header class="header navbar navbar-expand-sm">
+                    <a href="javascript:void(0);" class="sidebarCollapse" data-placement="bottom">
+                        <i class="las la-bars"></i>
+                    </a>
+                    <ul class="navbar-nav flex-row">
+                        <li>
+                            <div class="page-header">
+                                <nav class="breadcrumb-one" aria-label="breadcrumb">
+                                    <ol class="breadcrumb">
+                                        <li class="breadcrumb-item"><a href="javascript:void(0);">Services</a></li>
+                                    </ol>
+                                </nav>
+                            </div>
+                        </li>
+                    </ul>
+                </header>
+            </div>
+            <li class="heading-nav nav-item dropdown fullscreen-dropdown d-none d-lg-flex">
+                @*PlantName :*@ @Request.Cookies["PlantName"].Value.ToString()
+            </li>
+        </ul>
+        <ul class="navbar-item flex-row ml-md-auto">
+            <li class="nav-item dropdown fullscreen-dropdown d-none d-lg-flex">
+                <a class="nav-link full-screen-mode d-flex align-center" href="javascript:void(0);">
+                    <i class="las la-compress pr-2" id="fullScreenIcon"></i>Full Display
+                </a>
+            </li>
+            <li class="nav-item dropdown notification-dropdown">
+                <a href="javascript:void(0);" class="nav-link dropdown-toggle position-relative" id="notificationDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <i class="las la-bell"></i>
+                    <div class="blink">
+                        <div class="circle"></div>
+                    </div>
+                </a>
+                <div class="dropdown-menu position-absolute" aria-labelledby="notificationDropdown">
+                    <div class="nav-drop is-notification-dropdown">
+
+                    </div>
+                </div>
+            </li>
+            <li class="nav-item dropdown user-profile-dropdown d-flex align-items-center pr-4">
+                <a href="javascript:void(0);" class="nav-link dropdown-toggle user" id="userProfileDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                    <div class="d-flex flex-column text-right">
+                        <span class="font-12 strong lh-normal">Welcome! @Request.Cookies["EmpDesc"].Value.ToString()</span>
+                        <span class="font-11 lighter lh-normal">@Request.Cookies["RoleName"].Value.ToString()</span>
+                    </div>
+                    <img src="~/assets/img/new-pizza.jpg" alt="avatar">
+                </a>
+                <div class="dropdown-menu position-absolute" aria-labelledby="userProfileDropdown">
+                    <div class="nav-drop is-account-dropdown">
+                        <div class="inner">
+                            <div class="nav-drop-body account-items p-0">
+                                <a id="profile-link" class="account-item" href="pages_profile.html">
+                                    <div class="media align-center">
+                                        <div class="media-left">
+                                            <div class="image">
+                                                <img class="rounded-circle avatar-xs" src="~/assets/img/new-pizza.jpg" alt="">
+                                            </div>
+                                        </div>
+                                        <div class="media-content ml-3">
+                                            <h6 class="font-13 mb-0 strong">@Request.Cookies["EmpDesc"].Value.ToString()</h6>
+                                            <small>@Request.Cookies["RoleName"].Value.ToString()</small>
+                                        </div>
+                                        <div class="media-right">
+                                            <i data-feather="check"></i>
+                                        </div>
+                                    </div>
+                                </a>
+                                <a class="account-item" href="pages_profile.html">
+                                    <div class="media align-center">
+                                        <div class="icon-wrap">
+                                            <i class="las la-user font-20"></i>
+                                        </div>
+                                        <div class="media-content ml-3">
+                                            <h6 class="font-13 mb-0 strong">My Account</h6>
+                                        </div>
+                                    </div>
+                                </a>
+                                <a class="account-item" href="pages_timeline.html">
+                                    <div class="media align-center">
+                                        <div class="icon-wrap">
+                                            <i class="las la-briefcase font-20"></i>
+                                        </div>
+                                        <div class="media-content ml-3">
+                                            <h6 class="font-13 mb-0 strong">My Activity</h6>
+                                        </div>
+                                    </div>
+                                </a>
+                                <a class="account-item settings">
+                                    <div class="media align-center">
+                                        <div class="icon-wrap">
+                                            <i class="las la-cog font-20"></i>
+                                        </div>
+                                        <div class="media-content ml-3">
+                                            <h6 class="font-13 mb-0 strong">Settings</h6>
+                                        </div>
+                                    </div>
+                                </a>
+                                <hr class="account-divider">
+                                <a class="account-item" href="~/Login/LoginPage">
+                                    <div class="media align-center">
+                                        <div class="icon-wrap">
+                                            <i class="las la-sign-out-alt font-20"></i>
+                                        </div>
+                                        <div class="media-content ml-3">
+                                            <h6 class="font-13 mb-0 strong ">Logout</h6>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </header>
+</div>
+<div class="layout-px-spacing">
+    <div class="layout-top-spacing mb-2">
+        <div class="col-md-12">
+            <div class="row">
+                <div class="container p-0">
+                    <div class="row layout-top-spacing date-table-container">
+                        <!-- Datatable show/hide column -->
+                        <div class="col-xl-12 col-lg-12 col-sm-12  layout-spacing">
+                            <div class="widget-content widget-content-area br-6">
+                                <h4 class="table-header" style="font-size: 24px;">Batch Hold Process</h4>
+                                <div class="toggle-list col-sm-12">
+                                    <div class="row">
+                                        <p>
+                                            <a class="btn btn-primary filt" style="border-radius: 30px;" data-toggle="collapse"
+                                               href="#multiCollapseExample1" role="button"
+                                               aria-expanded="false"
+                                               aria-controls="multiCollapseExample1"><i class="las la-minus-circle la-lg mr-2"></i>Minimize</a>
+                                        </p>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col">
+                                            <div class="collapse multi-collapse show"
+                                                 id="multiCollapseExample1">
+                                                <div class="card card-body mb-5 col-lg-12 col-md-12 col-sm-12 report-content"
+                                                     style="background-color: whitesmoke;">
+                                                    <form id="frmBatchHold">
+                                                        <div class="row mb-2">
+                                                            <div class="col-sm-12">
+                                                                <h4 class="pl-2 pt-2">Batch Hold Process</h4>
+                                                                <hr>
+                                                            </div>
+
+                                                        </div>
+                                                        <div class="perwisrep-input-lane1 row">
+                                                            <div class="form-group col-sm-4">
+                                                                <label class="col-form-label col-sm-12">
+                                                                    Plant
+                                                                </label>
+                                                                <div class="">
+                                                                    @Html.DropDownListFor(x => x.PlantId, new SelectList(Model.PlantDetails, "Value", "Text"), "--- SELECT ---", new { @class = "form-control", name = "PlantId", onchange = "LoadMaterial()" })
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group col-sm-4">
+                                                                <label class="col-form-label col-sm-12">
+                                                                    Hold Type
+                                                                </label>
+                                                                <div class="">
+                                                                    @Html.DropDownListFor(x => x.HoldType, new SelectList(Model.HoldTypeDetails, "Value", "Text"), "--- SELECT ---", new { @class = "form-control", name = "HoldType" })
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group col-sm-4">
+                                                                <label class="col-form-label col-sm-12">
+                                                                    Material Name
+                                                                </label>
+                                                                <div class="">
+                                                                    <select onchange="getBatch()" class="form-control" id="MaterialCode" name="MaterialCode">
+                                                                        <option value="" selected>---SELECT---</option>
+                                                                    </select>
+                                                                    <br />
+                                                                    <div id='result'></div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="perwisrep-input-lane1 row">
+                                                            
+                                                            <div class="form-group col-sm-4">
+                                                                <label class="col-form-label col-sm-12">
+                                                                    Batch Number
+                                                                </label>
+                                                                <div class="">
+                                                                    <select class="form-control" id="BatchNo" name="BatchNo">
+                                                                        <option value="" selected>---SELECT---</option>
+                                                                    </select>
+                                                                    <br />
+                                                                    <div id='result'></div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="perwisrep-input-lane2 row">
+                                                            <div class="col-sm-12">
+                                                                <hr>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="perwisrep-input-lane5 row">
+                                                            <div class="form-group col-sm-12 dayclose" style="display: flex;flex-direction:row;justify-content: center;">
+                                                                <button class="btn btn-primary mr-4" onclick="GetSecondary()" type="button" value="Submit">Submit</button>
+                                                                <button class="btn btn-dark mr-4" onclick="funclear()" type="reset">Clear</button>
+                                                            </div>
+                                                        </div>
+
+
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="table-responsive mb-4">
+                                        <table id="tblHold"
+                                               class="table table-bordered table-hover text-left"
+                                               style="width:100%">
+                                        </table>
+                                    </div>
+                                        <div class="form-group col-sm-12 dayclose" style="display: flex;flex-direction:row;justify-content: center;">
+                                            <button class="btn btn-danger" onclick="@ViewBag.IsEdit == 1 ? ItemHold() : ResError()" type="button">HOLD</button>
+                                        </div>
+
+                                </div>
+
+                            </div>
+                        </div>
+                        <!-- END -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script>
+
+    $(document).ready(function () {
+
+        // Initialize select2
+        $("#BatchNo").select2();
+        $("#MaterialCode").select2();
+    });
+
+
+    function ResError() {
+        toastr.error("You are not eligible for Hold items");
+    }
+    function ItemHold() {
+
+        var values = $('#tblHold input:checkbox:checked').map(function () {
+            return $(this).val();
+        }).get();
+
+        var arrData = [];
+        arrData = values;
+        console.log(arrData);
+        let HoldType = document.getElementById("HoldType").value;
+        let BatchNo = document.getElementById("BatchNo").Text;
+        if (HoldType == "") {
+            toastr.error("Please Select Hold Type");
+            return true;
+        }
+        if (BatchNo == "") {
+            toastr.error("Please Select Batch Number");
+            return true;
+        }
+        if (values == "")
+        {
+            toastr.error("Please Select Secondary Batch to Hold");
+            return true;
+        }
+        if (confirm("Are you sure to Save ?")) {
+            $.ajax({
+                type: "POST",
+                url: "/Service/HoldBatchItems?btchmodel=" + arrData,
+                contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+                dataType: "json",
+                data: $("#frmBatchHold").serialize(),
+                success: function (jsonData) {
+                    if (jsonData.Success == 1) {
+                        toastr.success(jsonData.Message);
+                        setTimeout(function () { location.reload(); }, 2000);
+                    }
+                }
+            });
+        }
+        return false;
+    }
+</script>
+
+<script>
+    function GetSecondary() {
+        $('#tblHold input:checkbox:checked').prop("checked", false);
+        $("#tblHold").empty();
+        var dataset = new Array();
+        let HoldType = document.getElementById("HoldType").value;
+        let BatchNo = document.getElementById("BatchNo").Text;
+        if (HoldType == "") {
+            toastr.error("Please Select Hold Type");
+            return true;
+        }
+        if (BatchNo == "") {
+            toastr.error("Please Select Batch Number");
+            return true;
+        }
+        $.ajax({
+            type: "POST",
+            url: "/Service/BatchesGetBarcode",
+            data: $("#frmBatchHold").serialize(),
+            contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+            dataType: "json",
+            success: function (jsonData) {
+                if ($.fn.DataTable.fnIsDataTable("#tblHold"))
+                    $("#tblHold").dataTable().fnDestroy();
+
+                $("#tblHold").empty();
+                var checkArray = jsonData.Data;
+                $.each(checkArray, function () {
+                    dataset.push(['<input type="checkbox" id="Barcode" class="checkbox-inline ml-sm-5" name="' +
+                        this.Text + '" value="' + this.Text + '">' + this.Text])
+                });
+                $('#tblHold').prepend('<input type="checkbox" id="allselect"> Select All');
+
+                $('#allselect').on('click', function () {
+                    $('.checkbox-inline').prop('checked', this.checked);
+                });
+
+                $('#tblHold').DataTable({
+                    "paging": false,
+                    data: dataset,
+                    columns: [{ title: "Items" }]
+                });
+            },
+
+        });
+    }
+</script>
+<script>
+    function getBatch() {
+        $('#tblHold input:checkbox:checked').prop("checked", false);
+        $("#tblHold").empty();
+        $.ajax({
+            type: "POST",
+            url: "/Service/BatchMaterial",
+            contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+            dataType: "json",
+            data: $("#frmBatchHold").serialize(),
+            success: function (jsonData) {
+                if (jsonData != null) {
+                    if (jsonData.Success == 1) {
+                        $("#BatchNo").empty();
+                        var lankanListArray = jsonData.Data;
+
+                        $("#BatchNo").append($("<option></option>").val("").html("---SELECT---"));
+                        // running a loop
+                        $.each(lankanListArray, function () {
+                            $("#BatchNo").append($("<option></option>").val(this.Value).html(this.Text));
+                        });
+                        $("#BatchNo").select2();
+
+                    }
+                    else if (jsonData.Success == 0)
+                        toastr.error(jsonData.Message);
+                    else
+                        toastr.error(jsonData.Message);
+                }
+                else {
+                    alert("something went wrong");
+                }
+            }
+        });
+    }
+
+
+
+</script>
+<script>
+    function LoadMaterial() {
+
+        $.ajax({
+            type: "POST",
+            url: "/Service/LoadPlantBatch",
+            contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+            dataType: "json",
+            data: $("#frmBatchHold").serialize(),
+            success: function (jsonData) {
+                if (jsonData != null) {
+                    if (jsonData.Success == 1) {
+                        $("#MaterialCode").empty();
+                        var lankanListArray = jsonData.Data;
+
+                        $("#MaterialCode").append($("<option></option>").val("").html("---SELECT---"));
+                        // running a loop
+                        $.each(lankanListArray, function () {
+                            $("#MaterialCode").append($("<option></option>").val(this.Value).html(this.Text));
+                        });
+                        $("#MaterialCode").select2();
+                    }
+                    else if (jsonData.Success == 0)
+                        toastr.error(jsonData.Message);
+                    else
+                        toastr.error(jsonData.Message);
+                }
+                else {
+                    alert("something went wrong");
+                }
+            }
+        });
+    }
+
+
+
+    function funclear() {
+        $("#BatchNo").val("");
+        $("#MaterialCode").val("");
+        $("#MaterialDesc").val("");
+        $("#HoldType").val("");
+        $('#tblHold input:checkbox:checked').prop("checked", false);
+        $("#tblHold").empty();
+    }
+
+</script>
+

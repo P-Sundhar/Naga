@@ -1,0 +1,31 @@
+# See http://help.github.com/ignore-files/ for more about ignoring files.
+
+# Folders
+/Web Application/NagaMaster/bin/
+/Web Application/NagaMaster/obj/
+/Web Application/NagaMaster/Log/
+/Web Application/NagaMaster/.vs/
+/Web Application/NagaMaster/Reports/
+
+/Web Api/SalesReturnAPI/bin/
+/Web Api/SalesReturnAPI/obj/
+/Web Api/SalesReturnAPI/Log/
+/Web Api/SalesReturnAPI/.vs/
+
+/Web Api/StockAPI/bin/
+/Web Api/StockAPI/obj/
+/Web Api/StockAPI/Log/
+/Web Api/StockAPI/.vs/
+
+/SAP Service/bin/
+/SAP Service/obj/
+/SAP Service/Log/
+/SAP Service/.vs/
+
+/WindowsApp/obj/
+/WindowsApp/bin/
+/WindowsApp/Log/
+/WindowsApp/.vs/
+
+/.vs/
+/.vscode/
